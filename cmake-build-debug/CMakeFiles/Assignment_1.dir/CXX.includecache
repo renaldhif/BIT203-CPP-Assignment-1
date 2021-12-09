@@ -6,11 +6,7 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.cpp
-CTIS.h
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
-
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
+/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
 iostream
 -
 string
@@ -22,35 +18,11 @@ cstdlib
 ctime
 -
 
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTISConsole.cpp
+/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTISConsole.cpp
 CTIS.h
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
+/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
 iostream
 -
 string
 -
-
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CentreOfficer.cpp
-CTIS.h
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
-
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CovidTest.cpp
-CTIS.h
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
-
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/Patient.cpp
-CTIS.h
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
-
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/TestCentre.cpp
-CTIS.h
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
-
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/TestKit.cpp
-CTIS.h
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
-
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/User.cpp
-CTIS.h
-C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.h
 

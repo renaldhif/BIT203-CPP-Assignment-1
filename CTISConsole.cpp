@@ -10,8 +10,9 @@
 #include <string>
 
 // Declare variables for user input and some variables have initialized values
-string firstname, lastname, username, password, fullname, patientType, ctName, ptnSympt;
-int option = 10, option2 = 10, selectType, ctID;
+string firstname, lastname, username, password, fullname,
+        patientType, ctName, ptnSympt, inTestName;
+int option = 10, option2 = 10, selectType, ctID, kitID, availQtyKit;
 char op;
 
 CTIS ctismain;
@@ -29,7 +30,7 @@ int main() {
 
         switch(option){
             case 0:
-                cout << "Program closed. Thank you.\n Stay Healthy Stay safe.";
+                cout << "Program closed.\nThank you.\nStay Healthy Stay safe.";
                 break; // break case 0
 
             case 1:{
@@ -65,75 +66,146 @@ int main() {
                 cout << "Enter password: ";
                 cin >> password;
 
-                // if login successful:
-                cout << "\nWelcome Test Center Manager, "<<  username << endl;
-                cout << "Select menu below: " << endl;
-                cout << "\t[1] Register Test Centre" << endl;
-                cout << "\t[2] Record Tester" << endl;
-                cout << "\t[3] Manage Test Kit Stock" << endl;
-                cout << "\t[4] Generate Report" << endl;
-                cout << "\t[0] Back" << endl;
-                cout << "Input number: ";
-                cin >> option2;
-                cout << endl;
-
-                while (!(option2 >= 0 && option2 <= 3)){
-                    cout << "Please input valid number!" << endl;
+                // validate if account exists
+                if(ctismain.isLoginMgrValid(username,password)){
+                    cout << "\nWelcome Test Center Manager, "<<  username << endl;
+                    cout << "Select menu below: " << endl;
+                    cout << "\t[1] Register Test Centre" << endl;
+                    cout << "\t[2] Record Tester" << endl;
+                    cout << "\t[3] Manage Test Kit Stock" << endl;
+                    cout << "\t[4] Generate Report" << endl;
+                    cout << "\t[0] Back" << endl;
                     cout << "Input number: ";
                     cin >> option2;
                     cout << endl;
+
+                    while (!(option2 >= 0 && option2 <= 3)){
+                        cout << "Please input valid number!" << endl;
+                        cout << "Input number: ";
+                        cin >> option2;
+                        cout << endl;
+                    }
+
+                    switch(option2){
+                        case 0:
+                            break;
+
+                        case 1:{
+                            cout << "Register Test Center " << endl;
+                            cout << "Input centre name: ";
+                            cin.ignore();
+                            getline(cin,ctName);
+
+                            ctID = ctismain.randTCID();
+
+                            TestCentre tct(ctID, ctName);
+                            cout << "Test Centre " << ctName
+                                << ", with Test Centre ID: " << ctID
+                                << " has successfully registered." << endl;
+                            break;
+                        }
+
+                        case 2:{
+                            cout << "Record for new Tester ";
+                            cout << "\nEnter First Name: ";
+                            cin >> firstname;
+
+                            cout << "Enter Last name: ";
+                            cin >> lastname;
+
+                            fullname = firstname + " " + lastname;
+
+                            cout << "Enter username: ";
+                            cin >> username;
+
+                            cout << "Enter password: ";
+                            cin >> password;
+
+                            // create new object centre officer
+
+                            CentreOfficer newTester(username,password, fullname, "Tester");
+                            ctismain.setTesterList(newTester);
+
+                            cout << "Tester " << fullname
+                                << ", with username " << username
+                                << " has successfully registered." << endl;
+                            break;
+                        }
+
+                            // record tester
+
+                        case 3:{
+                            cout << "Create a new test kit stock?:" << endl;
+                            cout << "\t[(Y)es/(N)o]: ";
+                            cin >> op;
+
+                            while (!(op == 'Y' || op == 'y' || op == 'N' || op == 'n')){
+                                cout << "Please enter Y/y for yes, and N/n for no" << endl;
+                                cout << "\t[(Y)es/(N)o]: ";
+                                cin >> op;
+                            }
+
+                            if (op == 'Y' || op == 'y'){
+                                cout << "\nCreating new test kit..." << endl;
+
+                                cout << "Enter test name: ";
+                                cin.ignore();
+                                getline(cin,inTestName);
+
+                                cout << "Input available kit stock: ";
+                                cin >> availQtyKit;
+
+                                kitID = ctismain.randKitID();
+                                // create new TestKit object
+                                TestKit newTestKit(kitID,availQtyKit,inTestName);
+                                ctismain.setTestKitList(newTestKit);
+
+                                cout << "Test Kit " << inTestName
+                                     << ", with ID " << kitID
+                                     << " has "<< availQtyKit
+                                     << " available stock successfully registered." << endl;
+                            }
+                            else if(op == 'N' || op == 'n'){
+                                cout << "Manage Test Kit Stock:" << endl;
+                                cout << "Input Kit ID: ";
+                                cin >> kitID;
+                                // search kit ID and update stock.
+                                for (int i = 0; i < ctismain.getTestKitList().size(); i++){
+                                    while(kitID != ctismain.getTestKitList().at(i).getKitID()){
+                                        cout << "No Kit ID found. Please try again." << endl;
+                                        cout << "Input Kit ID: ";
+                                        cin >> kitID;
+                                    }
+                                    if (kitID == ctismain.getTestKitList().at(i).getKitID()){
+                                        int currentQty, updQty, resQty, updatedQty;
+                                        currentQty = ctismain.getTestKitList().at(i).getAvailableKit();
+
+                                        cout << "Current available stock is: " << currentQty << endl;
+                                        cout << "Update stock: ";
+                                        cin >> updQty;
+                                        resQty = currentQty + updQty;
+                                        ctismain.getTestKitList().at(i).setAvailableKit(resQty);
+                                        cout << "Stock updated!" << endl;
+                                        cout << "After updated: " << resQty << endl;
+                                        updatedQty = ctismain.getTestKitList().at(i).getAvailableKit();
+                                        cout << "Stock available: " << updatedQty;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+
+                        case 4:
+                            cout << "Report details: " << endl;
+                            break;
+
+                        default:
+                            cout << "Wrong number. Please input valid number";
+                    }
                 }
-
-                switch(option2){
-                    case 0:
-                        break;
-
-                    case 1:{
-                        cout << "Register Test Center " << endl;
-                        cout << "Input centre name: ";
-                        cin >> ctName;
-                        ctID = ctismain.randTCID();
-
-                        TestCentre tct(ctID, ctName);
-                        break;
-                    }
-
-                    case 2:{
-                        cout << "Record for new Tester ";
-                        cout << "\nEnter First Name: ";
-                        cin >> firstname;
-
-                        cout << "Enter Last name: ";
-                        cin >> lastname;
-
-                        fullname = firstname + " " + lastname;
-
-                        cout << "Enter username: ";
-                        cin >> username;
-
-                        cout << "Enter password: ";
-                        cin >> password;
-
-                        // create new object centre officer
-
-                        CentreOfficer newTester(username,password, fullname, "Tester");
-                        ctismain.setTesterList(newTester);
-                        break;
-                    }
-
-                        // record tester
-
-                    case 3:
-                        cout << "Manage Test Kit Stock" << endl;
-                        // manage test kit stock
-                        break;
-
-                    case 4:
-                        cout << "Report details: " << endl;
-                        break;
-
-                    default:
-                        cout << "Wrong number. Please input valid number";
+                else{
+                    cout << "Sorry. No account matched." << endl;
+                    cout << "Please input username and password correctly." << endl;
                 }
                 break; // break for case 2
 

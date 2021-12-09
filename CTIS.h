@@ -14,10 +14,8 @@ using namespace std;
 
 class User;
 class CTIS;
-
 class CentreOfficer;
 class CovidTest;
-
 class Patient;
 class TestCentre;
 class TestKit;
@@ -173,6 +171,7 @@ private:
     vector<Patient> patientList;
     vector<CentreOfficer> managerList;
     vector<CentreOfficer> testerList;
+    vector<TestKit> testKitList;
 public:
     // Constructor
     CTIS();
@@ -184,15 +183,19 @@ public:
     void setPatientList(Patient newPatient);
     void setManagerList(CentreOfficer newManager);
     void setTesterList(CentreOfficer newTester);
+    void setTestKitList(TestKit newTestKit);
 
     // getter
     vector<Patient> getPatientList();
     vector<CentreOfficer> getManagerList();
     vector<CentreOfficer> getTesterList();
+    vector<TestKit> getTestKitList();
 
     // other methods
     vector<Patient> showPatientList();
     int randTCID();
+    int randKitID();
+    bool isLoginMgrValid(string mgrUser, string mgrPwd);
 
 };
 
@@ -255,5 +258,12 @@ public:
         string getTestName();
         // to string
         string toString();
+
+        // other methods
+
+//
+//        int getUpdatedKit(){
+//            return
+//        }
     };
 #endif //ASSIGNMENT_1_CTIS_H

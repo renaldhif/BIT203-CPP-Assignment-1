@@ -27,6 +27,10 @@ void CTIS::setManagerList(CentreOfficer newManager) {
     managerList.push_back(newManager);
 }
 
+void CTIS::setTestKitList(TestKit newTestKit) {
+    testKitList.push_back(newTestKit);
+}
+
 
 
 // getter
@@ -42,20 +46,48 @@ vector<CentreOfficer> CTIS::getTesterList() {
     return testerList;
 }
 
-vector<Patient> CTIS::showPatientList(){
-    string strPtnList = "";
-    for (int i = 0; i < patientList.size(); i++){
-        //cout << patientList[i] << endl;
-    }
+vector<TestKit> CTIS::getTestKitList() {
+    return testKitList;
 }
 
+// other methods
+//vector<Patient> CTIS::showPatientList(){
+////    string strPtnList = "";
+////    for (int i = 0; i < patientList.size(); i++){
+////        //cout << patientList[i] << endl;
+////    }
+//}
+
 // generate an unique int number from 0 - 10
+// for Test Centre ID
 int CTIS::randTCID(){
-    int testID;
+    int genTCID;
     // will generate unique number
     srand((unsigned) time(0));
-    // will generate random number 0-1
-    testID = (rand() % 10);
+    // will generate random number 1-10
+    genTCID = (rand() % 10) + 1;
 
-    return testID;
+    return genTCID;
+}
+
+
+// generate an unique int number from 0 - 50
+int CTIS::randKitID() {
+    int genKitID;
+    // will generate unique number
+    srand((unsigned) time(0));
+    // will generate random number 1-50
+    genKitID = (rand() % 50) + 1;
+
+    return genKitID;
+}
+
+
+bool CTIS::isLoginMgrValid(string mgrUser, string mgrPwd){
+    for (int i = 0; i < managerList.size(); i++){
+        if (((mgrUser == getManagerList().at(i).getUsername()) && (mgrPwd == getManagerList().at(i).getPassword()))){
+            return true;
+        }
+    }
+    return false;
 }

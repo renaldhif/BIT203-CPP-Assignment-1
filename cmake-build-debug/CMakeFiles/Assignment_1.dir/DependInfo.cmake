@@ -8,16 +8,16 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.cpp" "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/CTIS.cpp.obj"
-  "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTISConsole.cpp" "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/CTISConsole.cpp.obj"
-  "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CentreOfficer.cpp" "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/CentreOfficer.cpp.obj"
-  "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CovidTest.cpp" "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/CovidTest.cpp.obj"
-  "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/Patient.cpp" "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/Patient.cpp.obj"
-  "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/TestCentre.cpp" "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/TestCentre.cpp.obj"
-  "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/TestKit.cpp" "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/TestKit.cpp.obj"
-  "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/User.cpp" "C:/Users/ASUS/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/User.cpp.obj"
+  "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTIS.cpp" "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/CTIS.cpp.o"
+  "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CTISConsole.cpp" "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/CTISConsole.cpp.o"
+  "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CentreOfficer.cpp" "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/CentreOfficer.cpp.o"
+  "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/CovidTest.cpp" "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/CovidTest.cpp.o"
+  "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/Patient.cpp" "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/Patient.cpp.o"
+  "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/TestCentre.cpp" "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/TestCentre.cpp.o"
+  "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/TestKit.cpp" "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/TestKit.cpp.o"
+  "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/User.cpp" "/Users/renaldhif/OneDrive/COLLEGE/ASSIGNMENTS/5th Semester/BIT205 - C++ OOP/Assignment 1/cmake-build-debug/CMakeFiles/Assignment_1.dir/User.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
