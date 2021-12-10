@@ -51,6 +51,10 @@ string TestKit::getTestName() {
     return testName;
 }
 
+void TestKit::addStock(int updQty) {
+    availableKit = availableKit + updQty;
+}
+
 string TestKit::toString() {
     return "kit ID: " + to_string(kitID) +
             ", available kit: " + to_string(availableKit) +

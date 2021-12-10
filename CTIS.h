@@ -169,8 +169,7 @@ public:
 class CTIS{
 private:
     vector<Patient> patientList;
-    vector<CentreOfficer> managerList;
-    vector<CentreOfficer> testerList;
+    vector<CentreOfficer> officerList;
     vector<TestKit> testKitList;
 public:
     // Constructor
@@ -181,22 +180,20 @@ public:
 
     // setter
     void setPatientList(Patient newPatient);
-    void setManagerList(CentreOfficer newManager);
-    void setTesterList(CentreOfficer newTester);
+    void setOfficerList(CentreOfficer newOfficer);
     void setTestKitList(TestKit newTestKit);
 
     // getter
     vector<Patient> getPatientList();
-    vector<CentreOfficer> getManagerList();
-    vector<CentreOfficer> getTesterList();
+    vector<CentreOfficer> getOfficerList();
     vector<TestKit> getTestKitList();
 
     // other methods
     vector<Patient> showPatientList();
     int randTCID();
     int randKitID();
-    bool isLoginMgrValid(string mgrUser, string mgrPwd);
-
+    bool isLoginMgrValid(string ofcUser, string ofcPwd);
+    bool isLoginTstValid(string tstUser, string tstPwd);
 };
 
 /**
@@ -258,6 +255,7 @@ public:
         string getTestName();
         // to string
         string toString();
+        void addStock(int newAdd);
 
         // other methods
 

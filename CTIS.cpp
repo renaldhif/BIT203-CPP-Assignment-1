@@ -19,12 +19,8 @@ void CTIS::setPatientList(Patient newPatient){
     patientList.push_back(newPatient);
 }
 
-void CTIS::setTesterList(CentreOfficer newTester) {
-    testerList.push_back(newTester);
-}
-
-void CTIS::setManagerList(CentreOfficer newManager) {
-    managerList.push_back(newManager);
+void CTIS::setOfficerList(CentreOfficer newOfficer) {
+    officerList.push_back(newOfficer);
 }
 
 void CTIS::setTestKitList(TestKit newTestKit) {
@@ -38,12 +34,8 @@ vector<Patient> CTIS::getPatientList(){
     return patientList;
 }
 
-vector<CentreOfficer> CTIS::getManagerList(){
-    return managerList;
-}
-
-vector<CentreOfficer> CTIS::getTesterList() {
-    return testerList;
+vector<CentreOfficer> CTIS::getOfficerList() {
+    return officerList;
 }
 
 vector<TestKit> CTIS::getTestKitList() {
@@ -83,10 +75,27 @@ int CTIS::randKitID() {
 }
 
 
-bool CTIS::isLoginMgrValid(string mgrUser, string mgrPwd){
-    for (int i = 0; i < managerList.size(); i++){
-        if (((mgrUser == getManagerList().at(i).getUsername()) && (mgrPwd == getManagerList().at(i).getPassword()))){
-            return true;
+bool CTIS::isLoginMgrValid(string ofcUser, string ofcPwd){
+    string posOfc;
+    for (int i = 0; i < officerList.size(); i++){
+        if (((ofcUser == getOfficerList().at(i).getUsername()) && (ofcPwd == getOfficerList().at(i).getPassword()))){
+            posOfc = getOfficerList().at(i).getOfcPosition();
+            if (posOfc == "Manager"){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool CTIS::isLoginTstValid(string tstUser, string tstPwd) {
+    string posOfc;
+    for (int i = 0; i < officerList.size(); i++){
+        if (((tstUser == getOfficerList().at(i).getUsername()) && (tstPwd == getOfficerList().at(i).getPassword()))){
+            posOfc = getOfficerList().at(i).getOfcPosition();
+            if (posOfc == "Tester"){
+                return true;
+            }
         }
     }
     return false;
