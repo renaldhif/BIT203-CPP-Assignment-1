@@ -14,10 +14,10 @@ using namespace std;
 
 class User;
 class CTIS;
+class TestCentre;
 class CentreOfficer;
 class CovidTest;
 class Patient;
-class TestCentre;
 class TestKit;
 
 /**
@@ -56,24 +56,56 @@ public:
 };
 
 /**
- * Centre Officer Class
+ * Test Centre Class
  */
 
+class TestCentre {
+private:
+    int centreID;
+    string centreName;
+
+public:
+    // constructor
+    TestCentre();
+
+    // constructor with arguments
+    TestCentre(int inCentreID, string inCentreName);
+
+    // destructor
+    ~TestCentre();
+
+    // setters
+    void setCentreID(int inCentreID);
+    void setCentreName(string inCentreName);
+
+    // getters
+    int getCentreID();
+    string getCentreName();
+    // to string
+    string toString();
+};
+
+
+/**
+ * Centre Officer Class
+ */
 class CentreOfficer : public User{
+
 private:
     string ofcPosition;
-
+    TestCentre tct;
 public:
     // constructor
     CentreOfficer();
 
     // constructor with arguments
-    CentreOfficer(string inUName, string inPwd, string inFName, string inOfcPos);
+    CentreOfficer(string inUName, string inPwd, string inFName, string inOfcPos, TestCentre tct);
 
     // destructor
     ~CentreOfficer();
     // setters
     void setOfcPosition(string inOfcPos);
+    void setTestCentreOfc(TestCentre tctOfc);
 
     // getters
     string getOfcPosition();
@@ -111,6 +143,9 @@ public:
     void setPatientType(string);
     void setSymptoms(string);
 
+    void updatePatientType(string);
+    void updateSymptoms(string);
+
     // getters
     string getPatientType();
     string getSymptoms();
@@ -143,7 +178,7 @@ public:
     // constructor with arguments
     CovidTest(int inTestID, string inTestDate,string inResult, string inResultDate, string inStatus);
 
-    // destructormh
+    // destructor
     ~CovidTest();
     // setters
     void setTestID(int inTestID);
@@ -171,6 +206,7 @@ private:
     vector<Patient> patientList;
     vector<CentreOfficer> officerList;
     vector<TestKit> testKitList;
+    vector<TestCentre> testCentreList;
 public:
     // Constructor
     CTIS();
@@ -182,11 +218,13 @@ public:
     void setPatientList(Patient newPatient);
     void setOfficerList(CentreOfficer newOfficer);
     void setTestKitList(TestKit newTestKit);
+    void setTestCentreList(TestCentre newTestCentre);
 
     // getter
     vector<Patient> getPatientList();
     vector<CentreOfficer> getOfficerList();
     vector<TestKit> getTestKitList();
+    vector<TestCentre> getTestCentreList();
 
     // other methods
     vector<Patient> showPatientList();
@@ -196,66 +234,38 @@ public:
     bool isLoginTstValid(string tstUser, string tstPwd);
 };
 
-/**
- * Test Centre Class
- */
-
-    class TestCentre {
-    private:
-        int centreID;
-        string centreName;
-
-    public:
-        // constructor
-        TestCentre();
-
-        // constructor with arguments
-        TestCentre(int inCentreID, string inCentreName);
-
-        // destructor
-        ~TestCentre();
-
-        // setters
-        void setCentreID(int inCentreID);
-        void setCentreName(string inCentreName);
-        // getters
-        int getCentreID();
-        string setCentreName();
-        // to string
-        string toString();
-    };
 
 /**
  * TestKit class
  */
 
-    class TestKit{
-    private:
-        int kitID, availableKit;
-        string testName;
+class TestKit{
+private:
+    int kitID, availableKit;
+    string testName;
 
-    public:
-        // constructor
-        TestKit();
+public:
+    // constructor
+    TestKit();
 
-        // constructor with arguments
-        TestKit(int inKitID, int inAvailableKit, string inTestName);
+    // constructor with arguments
+    TestKit(int inKitID, int inAvailableKit, string inTestName);
 
-        // destructor
-        ~TestKit();
+    // destructor
+    ~TestKit();
 
-        // setters
-        void setKitID(int);
-        void setAvailableKit(int);
-        void setTestName(string);
+    // setters
+    void setKitID(int);
+    void setAvailableKit(int);
+    void setTestName(string);
 
-        // getters
-        int getKitID();
-        int getAvailableKit();
-        string getTestName();
-        // to string
-        string toString();
-        void addStock(int newAdd);
+    // getters
+    int getKitID();
+    int getAvailableKit();
+    string getTestName();
+    // to string
+    string toString();
+    void addStock(int newAdd);
 
         // other methods
 
@@ -263,5 +273,5 @@ public:
 //        int getUpdatedKit(){
 //            return
 //        }
-    };
+};
 #endif //ASSIGNMENT_1_CTIS_H

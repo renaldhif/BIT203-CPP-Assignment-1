@@ -36,6 +36,15 @@ void Patient::setSymptoms(string inSymptoms){
     symptoms = inSymptoms;
 }
 
+
+void Patient::updatePatientType(string updatePtnType) {
+    patientType = updatePtnType;
+}
+
+void Patient::updateSymptoms(string updatePtnSympt) {
+    symptoms = updatePtnSympt;
+}
+
 // getters
 string Patient::getPatientType(){
     return patientType;

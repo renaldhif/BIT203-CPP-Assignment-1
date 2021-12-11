@@ -17,11 +17,12 @@ CentreOfficer::CentreOfficer() {
 }
 
 // constructor with arguments
-CentreOfficer::CentreOfficer(string inUName, string inPwd, string inFName, string inOfcPos){
+CentreOfficer::CentreOfficer(string inUName, string inPwd, string inFName, string inOfcPos, TestCentre tct){
     setUsername(inUName);
     setPassword(inPwd);
     setFullname(inFName);
     setOfcPosition(inOfcPos);
+    setTestCentreOfc(tct);
 
 }
 
@@ -32,6 +33,11 @@ CentreOfficer::~CentreOfficer(){}
 void CentreOfficer::setOfcPosition (string inOfcPos){
     ofcPosition = inOfcPos;
 }
+
+void CentreOfficer::setTestCentreOfc(TestCentre tctOfc){
+    tct = tctOfc;
+}
+
 
 // getters
 string CentreOfficer::getOfcPosition(){

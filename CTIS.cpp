@@ -27,7 +27,9 @@ void CTIS::setTestKitList(TestKit newTestKit) {
     testKitList.push_back(newTestKit);
 }
 
-
+void CTIS::setTestCentreList(TestCentre newTestCentre) {
+    testCentreList.push_back(newTestCentre);
+}
 
 // getter
 vector<Patient> CTIS::getPatientList(){
@@ -40,6 +42,10 @@ vector<CentreOfficer> CTIS::getOfficerList() {
 
 vector<TestKit> CTIS::getTestKitList() {
     return testKitList;
+}
+
+vector<TestCentre> CTIS::getTestCentreList() {
+    return testCentreList;
 }
 
 // other methods

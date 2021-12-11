@@ -36,7 +36,7 @@ int TestCentre::getCentreID(){
     return centreID;
 }
 
-string TestCentre::setCentreName(){
+string TestCentre::getCentreName(){
     return centreName;
 }
 
