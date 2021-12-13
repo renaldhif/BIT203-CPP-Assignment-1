@@ -122,6 +122,10 @@ int main() {
                                  << " registered at Test Centre " <<  ofcLoggedIn->getTestCentreOfc().getCentreName()
                                  << ", with Test Centre ID: " << ctID
                                  << " has successfully registered." << endl;
+
+                            for(int i =0; i < ctismain.getOfficerList().size(); i++) {
+                                cout << "check: "<<  ctismain.getOfficerList()[i].getTestCentreOfc().getCentreName();
+                            }
                             break;
                         }
 
@@ -149,16 +153,20 @@ int main() {
                             cin >> password;
 
                             // create new object centre officer
-
-                            CentreOfficer newTester(username, password, fullname, "Tester", tct);
+                            TestCentre tctTester = ofcLoggedIn->getTestCentreOfc();
+                            CentreOfficer newTester(username, password, fullname, "Tester", tctTester);
                             ctismain.setOfficerList(newTester);
 
                             //for (int i = 0; i < ctismain.getTestCentreList().size(); i++){
                                 cout << "Tester " << fullname
                                      << ", with username " << username
-                                     << ", assigned to: " << tct.getCentreName()
+                                     << ", assigned to: " << newTester.getTestCentreOfc().getCentreName()
                                      << " has successfully registered." << endl;
                            // }
+                            for(int i =0; i < ctismain.getOfficerList().size(); i++) {
+                                if(ctismain.getOfficerList()[i].getOfcPosition() == "Tester")
+                                    cout << "check: "<<  ctismain.getOfficerList()[i].getTestCentreOfc().getCentreName();
+                            }
 
                             break;
                         }
@@ -216,13 +224,17 @@ int main() {
                                     }
                                     if (kitID == ctismain.getTestKitList().at(i).getKitID()) {
                                         int currentQty, updQty;
-                                        TestKit *updateTestKit = &ctismain.getTestKitList().at(i);
+                                        TestKit *updateTestKit = ctismain.getTestKitByKitID(kitID);
                                         currentQty = updateTestKit->getAvailableKit();
 
                                         cout << "Current available stock is: " << currentQty << endl;
                                         cout << "Update stock: ";
                                         cin >> updQty;
                                         updateTestKit->addStock(updQty);
+
+                                        for(int i =0; i < ctismain.getTestKitList().size(); i++) {
+                                            cout << "Debug: " << ctismain.getTestKitList()[i].getAvailableKit();
+                                        }
 
                                         cout << "\nStock updated!" << endl;
                                         cout << "Stock updated: " << updateTestKit->getAvailableKit() << endl;
@@ -361,7 +373,7 @@ int main() {
                                     }
                                     if (username == ctismain.getPatientList().at(i).getUsername()) {
                                         string currentPtnType, updatePtnType, currentPtnSympt, updatePtnSympt;
-                                        Patient *updatePatient = &ctismain.getPatientList().at(i);
+                                        Patient *updatePatient = ctismain.getPatientByUsername(username);
 
                                         currentPtnType = updatePatient->getPatientType();
                                         currentPtnSympt = updatePatient->getSymptoms();
@@ -414,6 +426,11 @@ int main() {
                                         cout << "\nData updated!" << endl;
                                         cout << "Type updated: " << updatePatient->getPatientType() << endl;
                                         cout << "Symptoms updated: " << updatePatient->getSymptoms() << endl;
+
+                                        for(int i =0; i < ctismain.getPatientList().size(); i++) {
+                                            cout << "Debug: " << ctismain.getPatientList()[i].getPatientType() << endl;
+                                            cout << "Debug: " << ctismain.getPatientList()[i].getSymptoms() << endl;
+                                        }
                                     }
                                 }
                             }

@@ -58,6 +58,24 @@ CentreOfficer* CTIS::getOfficerByUsername(string uname)
     return NULL;
 }
 
+TestKit* CTIS::getTestKitByKitID(int kitID){
+    for (int i = 0; i < testKitList.size(); i++){
+        if (kitID == testKitList.at(i).getKitID()){
+            return &testKitList.at(i);
+        }
+    }
+    return NULL;
+}
+
+Patient* CTIS::getPatientByUsername(string ptnName) {
+    for (int i = 0; i < patientList.size(); i++){
+        if (ptnName == patientList.at(i).getUsername()){
+            return &patientList.at(i);
+        }
+    }
+    return NULL;
+}
+
 // other methods
 //vector<Patient> CTIS::showPatientList(){
 ////    string strPtnList = "";

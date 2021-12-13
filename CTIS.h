@@ -246,6 +246,8 @@ public:
     bool isPatientRegistered(string ptnUser);
 
     CentreOfficer* getOfficerByUsername(string uname);
+    TestKit* getTestKitByKitID(int kitID);
+    Patient* getPatientByUsername(string ptnName);
 };
 
 
