@@ -109,6 +109,7 @@ public:
 
     // getters
     string getOfcPosition();
+    TestCentre getTestCentreOfc();
 
     // to string
     string toString();
@@ -228,10 +229,23 @@ public:
 
     // other methods
     vector<Patient> showPatientList();
+    // generate rand numb
     int randTCID();
     int randKitID();
+    int randCTestID();
+
+    // validator for login
     bool isLoginMgrValid(string ofcUser, string ofcPwd);
     bool isLoginTstValid(string tstUser, string tstPwd);
+    bool isLoginPtnValid(string ptnUser, string ptnPwd);
+    // validator for unique name
+    bool isTestCentreRegistered(string ctName);
+    bool isTestKitRegistered(string tkName);
+    bool isManagerRegistered(string mgrUser);
+    bool isTesterRegistered(string tstUser);
+    bool isPatientRegistered(string ptnUser);
+
+    CentreOfficer* getOfficerByUsername(string uname);
 };
 
 

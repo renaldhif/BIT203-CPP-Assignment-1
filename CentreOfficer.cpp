@@ -23,7 +23,6 @@ CentreOfficer::CentreOfficer(string inUName, string inPwd, string inFName, strin
     setFullname(inFName);
     setOfcPosition(inOfcPos);
     setTestCentreOfc(tct);
-
 }
 
 // destructor
@@ -42,6 +41,10 @@ void CentreOfficer::setTestCentreOfc(TestCentre tctOfc){
 // getters
 string CentreOfficer::getOfcPosition(){
     return ofcPosition;
+}
+
+TestCentre CentreOfficer::getTestCentreOfc(){
+    return tct;
 }
 
 // to string

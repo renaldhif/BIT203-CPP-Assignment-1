@@ -11,7 +11,7 @@
 
 // Declare variables for user input and some variables have initialized values
 string firstname, lastname, username, password, fullname,
-        patientType, ctName, ptnSympt, inTestName;
+        patientType, ctName, ptnSympt, tkName;
 int option = 10, option2 = 10, selectType, ctID, kitID, availQtyKit;
 char op;
 
@@ -47,6 +47,13 @@ int main() {
                 cout << "Enter username: ";
                 cin >> username;
 
+                while(ctismain.isManagerRegistered(username)){
+                    cout << "Username has been taken." << endl;
+                    cout << "Please try another one." << endl;
+                    cout << "\nEnter username: ";
+                    cin >> username;
+                }
+
                 cout << "Enter password: ";
                 cin >> password;
 
@@ -69,6 +76,8 @@ int main() {
 
                 // validate if account exists
                 if (ctismain.isLoginMgrValid(username, password)) {
+                    CentreOfficer *ofcLoggedIn = ctismain.getOfficerByUsername(username);
+
                     cout << "\nWelcome Test Center Manager, " << username << endl;
                     cout << "Select menu below: " << endl;
                     cout << "\t[1] Register Test Centre" << endl;
@@ -98,16 +107,19 @@ int main() {
                             getline(cin, ctName);
 
                             ctID = ctismain.randTCID();
-
+                            while (ctismain.isTestCentreRegistered(ctName)){
+                                cout << "Test Centre name has been registered." << endl;
+                                cout << "Please try another one." << endl;
+                                cout << "\nInput centre name: ";
+                                getline(cin, ctName);
+                            }
                             //TestCentre tct(ctID, ctName);
                             TestCentre tct(ctID,ctName);
                             ctismain.setTestCentreList(tct);
+                            ofcLoggedIn->setTestCentreOfc(tct);
 
-                            for (int i = 0; i < ctismain.getTestCentreList().size(); i++){
-
-                            }
-
-                            cout << "Test Centre " << ctName
+                            cout << "Manager " <<  ofcLoggedIn->getFullname()
+                                 << " registered at Test Centre " <<  ofcLoggedIn->getTestCentreOfc().getCentreName()
                                  << ", with Test Centre ID: " << ctID
                                  << " has successfully registered." << endl;
                             break;
@@ -125,6 +137,13 @@ int main() {
 
                             cout << "Enter username: ";
                             cin >> username;
+
+                            while(ctismain.isTesterRegistered(username)){
+                                cout << "Username has been taken." << endl;
+                                cout << "Please try another one." << endl;
+                                cout << "\nEnter username: ";
+                                cin >> username;
+                            }
 
                             cout << "Enter password: ";
                             cin >> password;
@@ -162,17 +181,24 @@ int main() {
 
                                 cout << "Enter test name: ";
                                 cin.ignore();
-                                getline(cin, inTestName);
+                                getline(cin, tkName);
+
+                                while (ctismain.isTestKitRegistered(tkName)){
+                                    cout << "Test Kit name has been registered." << endl;
+                                    cout << "Please try another one." << endl;
+                                    cout << "\nInput Test Kit name: ";
+                                    getline(cin, tkName);
+                                }
 
                                 cout << "Input available kit stock: ";
                                 cin >> availQtyKit;
 
                                 kitID = ctismain.randKitID();
                                 // create new TestKit object
-                                TestKit newTestKit(kitID, availQtyKit, inTestName);
+                                TestKit newTestKit(kitID, availQtyKit, tkName);
                                 ctismain.setTestKitList(newTestKit);
 
-                                cout << "Test Kit " << inTestName
+                                cout << "Test Kit " << tkName
                                      << ", with ID " << kitID
                                      << " has " << availQtyKit
                                      << " available stock successfully registered." << endl;
@@ -256,7 +282,6 @@ int main() {
                                 cout << "\nRecord for new account Patient: " << endl;
                                 cout << "Enter First Name: ";
                                 cin >> firstname;
-
                                 cout << "Enter Last name: ";
                                 cin >> lastname;
 
@@ -264,6 +289,13 @@ int main() {
 
                                 cout << "Enter username: ";
                                 cin >> username;
+
+                                while(ctismain.isPatientRegistered(username)){
+                                    cout << "Username has been taken." << endl;
+                                    cout << "Please try another one." << endl;
+                                    cout << "\nEnter username: ";
+                                    cin >> username;
+                                }
 
                                 cout << "Enter password: ";
                                 cin >> password;
@@ -407,16 +439,23 @@ int main() {
                     cout << "Enter password: ";
                     cin >> password;
 
-                    cout << "\nWelcome patient, " << username;
-                    cout << "\nDo you want to view a Test Report?";
-                    cout << "\n\t[(Y)es / (N)o]: ";
-                    cin >> op;
+                    if (ctismain.isLoginPtnValid(username, password)){
+                        cout << "\nWelcome patient, " << username;
+                        cout << "\nDo you want to view a Test Report?";
+                        cout << "\n\t[(Y)es / (N)o]: ";
+                        cin >> op;
 
-                    if (op == 'y' || op == 'Y') {
-                        cout << "\nTest Report Patient's detail: " << endl;
-                    } else {
-                        // exit;
+                        if (op == 'y' || op == 'Y') {
+                            cout << "\nTest Report Patient's detail: " << endl;
+                        } else {
+                            // exit;
+                        }
                     }
+                    else{
+                        cout << "No account patient matched." << endl;
+                        cout << "Please try again" << endl;
+                    }
+
                     break; // break case 5
 
                     case 9:
