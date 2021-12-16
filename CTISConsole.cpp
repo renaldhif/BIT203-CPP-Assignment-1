@@ -12,7 +12,7 @@
 // Declare variables for user input and some variables have initialized values
 string firstname, lastname, username, password, fullname,
         patientType, ctName, ptnSympt, tkName;
-int option = 10, option2 = 10, selectType, ctID, kitID, availQtyKit;
+int option = 10, option2 = 10, selectType, ctID, kitID, availQtyKit, cTestID;
 char op;
 
 CTIS ctismain;
@@ -349,16 +349,35 @@ int main() {
                                         break;
                                 }
                                 cout << "Input symptoms: ";
-                                cin >> ptnSympt;
+                                cin.ignore();
+                                getline(cin,ptnSympt);
 
-                                Patient newPatient(username, password, fullname, patientType, ptnSympt);
+                                // create covid test
+                                // get covid test id
+                                cTestID = ctismain.randCTestID();
+                                // get date
+                                // local time from ctime library
+                                time_t locSysTime = time(NULL); // current system date
+                                tm* locSysTimePtr = localtime(&locSysTime);
+                                char curDateToStr[50];
+                                strftime(curDateToStr, 50, "%d %B %Y at %T", locSysTimePtr);
+
+                                CovidTest newCovidTest(cTestID,curDateToStr,"No Data", "No Data", "Pending");
+                                ctismain.setCovidTestList(newCovidTest);
+
+                                // create object patient
+                                Patient newPatient(username, password, fullname, patientType, ptnSympt, newCovidTest);
                                 ctismain.setPatientList(newPatient);
+                                cout << "Debug strftime: " << curDateToStr << endl;
 
-                                cout << "Patient " << fullname
+                                cout << "\nPatient " << fullname
                                      << ", Type: " << patientType
                                      << ", with username " << username
                                      << ", with symptoms " << ptnSympt
-                                     << " has successfully registered." << endl;
+                                     << " has successfully registered."
+                                     << "\nCovid Test ID: " << cTestID
+                                     << ", registered at " << curDateToStr
+                                     << endl;
                             }
                             else if (op == 'Y' || op == 'y'){
                                 cout << "Updating data patient..." << endl;
@@ -367,7 +386,7 @@ int main() {
                                 // search kit ID and update stock.
                                 for (int i = 0; i < ctismain.getPatientList().size(); i++) {
                                     while (username != ctismain.getPatientList().at(i).getUsername()) {
-                                        cout << "Username not found. Please try again." << endl;
+                                        cout << "\nUsername not found. Please try again." << endl;
                                         cout << "Input patient's username: ";
                                         cin >> username;
                                     }
@@ -439,7 +458,59 @@ int main() {
 
 
                         case 2:
-                            cout << "Update test result: ";
+                            // use case 5
+                            cout << "Update test result... " << endl;
+                            cout << "Input test ID to retrieve the test details: ";
+                            cin >> cTestID;
+                            for (int i = 0; i < ctismain.getCovidTestList().size(); i++){
+                                while (cTestID != ctismain.getCovidTestList().at(i).getTestID()) {
+                                    cout << "\nNo Covid Test ID found. Please try again." << endl;
+                                    cout << "Input test ID to retrieve the test details: ";
+                                    cin >> cTestID;
+                                }
+                                if (cTestID == ctismain.getCovidTestList().at(i).getTestID()) {
+                                    string upRes, upResDate, upStt;
+                                    //TestKit *updateTestKit = ctismain.getTestKitByKitID(cTestID);
+                                    CovidTest *updateCTResult = ctismain.getCovidTestByCTID(cTestID);
+                                    cout << "\nData Covid Test ID " << updateCTResult->getTestID() << ": " << endl;
+                                    cout << "\tTest Date: " << updateCTResult->getTestDate()<< endl;
+                                    cout << "\tResult: " << updateCTResult->getResult() << endl;
+                                    cout << "\tResult Date: " << updateCTResult->getResultDate() << endl;
+                                    cout << "\tStatus: " << updateCTResult->getStatus() << endl;
+                                    cout << "\nUpdate result: ";
+                                    cin.ignore();
+                                    getline(cin, upRes);
+                                    // update
+                                    updateCTResult->updateResult(upRes);
+
+                                    time_t locSysTime = time(NULL); // current system date
+                                    tm* locSysTimePtr = localtime(&locSysTime);
+                                    char curDateToStr[50];
+                                    strftime(curDateToStr, 50, "%d %B %Y at %T", locSysTimePtr);
+
+                                    upResDate = curDateToStr;
+                                    // update
+                                    updateCTResult->updateResultDate(upResDate);
+
+                                    upStt = "Completed";
+                                    // update
+                                    updateCTResult->updateStatus(upStt);
+
+                                    for(int i =0; i < ctismain.getCovidTestList().size(); i++) {
+                                        cout << "Debug Result: " << ctismain.getCovidTestList()[i].getResult() << endl;
+                                        cout << "Debug Result Date: " << ctismain.getCovidTestList()[i].getResultDate() << endl;
+                                        cout << "Debug Status: " << ctismain.getCovidTestList()[i].getStatus() << endl;
+                                    }
+
+                                    cout << "\nData Test updated!" << endl;
+                                    cout << "Covid Test with ID: " << updateCTResult->getTestID()
+                                         << ", registered at: " << updateCTResult->getTestDate()
+                                         << ", result is " << updateCTResult->getResult()
+                                         << ", was updated at " << updateCTResult->getResultDate()
+                                         << ", status now " << updateCTResult->getStatus()
+                                         << endl;
+                                }
+                            }
                             break;
                             // update some test here
 
@@ -464,7 +535,24 @@ int main() {
 
                         if (op == 'y' || op == 'Y') {
                             cout << "\nTest Report Patient's detail: " << endl;
-                        } else {
+                            //for (int i = 0; i < ctismain.getPatientList().size(); i++){
+                                //if (ctismain.isLoginPtnValid(username,password)){
+                                Patient *patientLoggedIn = ctismain.getPatientByUsername(username);
+                                //for(int j = 0; j < ctismain.getCovidTestList().size(); j++){
+
+                                        cout << " Patient name: " << patientLoggedIn->getFullname()
+                                             << ", has taken a test covid test with ID: " << patientLoggedIn->getCovidTestPtn().getTestID()
+                                             << ", registered on: " << patientLoggedIn->getCovidTestPtn().getTestDate()
+                                             << ", result is " << patientLoggedIn->getCovidTestPtn().getResult()
+                                             << ", was updated on " << patientLoggedIn->getCovidTestPtn().getResultDate()
+                                             << ", status now " << patientLoggedIn->getCovidTestPtn().getStatus()
+                                             << endl;
+                                    //}
+
+
+
+                        }
+                        else {
                             // exit;
                         }
                     }

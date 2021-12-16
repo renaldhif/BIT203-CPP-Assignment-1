@@ -49,6 +49,19 @@ void CovidTest::setStatus (string inStatus){
     status = inStatus;
 }
 
+
+void CovidTest::updateResult(string updatePtnType) {
+    result = updatePtnType;
+}
+
+void CovidTest::updateResultDate(string updatePtnSympt) {
+    resultDate = updatePtnSympt;
+}
+
+void CovidTest::updateStatus(string updateStatus){
+    status = updateStatus;
+}
+
 // getters
 int CovidTest::getTestID(){
     return testID;

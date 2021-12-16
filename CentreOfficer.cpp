@@ -13,6 +13,7 @@ CentreOfficer::CentreOfficer() {
     setUsername("defaultOfcUname");
     setPassword("defaultOfcPass");
     setFullname("defaultOfcFName");
+    //aggregation
     setOfcPosition("defaultOfcPost");
 }
 
@@ -22,6 +23,7 @@ CentreOfficer::CentreOfficer(string inUName, string inPwd, string inFName, strin
     setPassword(inPwd);
     setFullname(inFName);
     setOfcPosition(inOfcPos);
+    //aggregation
     setTestCentreOfc(tct);
 }
 
@@ -33,16 +35,16 @@ void CentreOfficer::setOfcPosition (string inOfcPos){
     ofcPosition = inOfcPos;
 }
 
+//aggregation
 void CentreOfficer::setTestCentreOfc(TestCentre tctOfc){
     tct = tctOfc;
 }
-
 
 // getters
 string CentreOfficer::getOfcPosition(){
     return ofcPosition;
 }
-
+//aggregation
 TestCentre CentreOfficer::getTestCentreOfc(){
     return tct;
 }

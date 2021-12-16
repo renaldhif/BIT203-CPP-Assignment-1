@@ -16,9 +16,9 @@ User::User(){
 
 // constructor with arguments
 User::User(string inUName, string inPwd, string inFName){
-    username = inUName;
-    password = inPwd;
-    fullname = inFName;
+    setUsername(inUName);
+    setPassword(inPwd);
+    setFullname(inFName);
 }
 
 // destructor

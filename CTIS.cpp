@@ -18,34 +18,34 @@ CTIS::~CTIS(){};
 void CTIS::setPatientList(Patient newPatient){
     patientList.push_back(newPatient);
 }
-
 void CTIS::setOfficerList(CentreOfficer newOfficer) {
     officerList.push_back(newOfficer);
 }
-
 void CTIS::setTestKitList(TestKit newTestKit) {
     testKitList.push_back(newTestKit);
 }
-
 void CTIS::setTestCentreList(TestCentre newTestCentre) {
     testCentreList.push_back(newTestCentre);
+}
+void CTIS::setCovidTestList(CovidTest newCovidTestList) {
+    covidTestList.push_back(newCovidTestList);
 }
 
 // getter
 vector<Patient> CTIS::getPatientList(){
     return patientList;
 }
-
 vector<CentreOfficer> CTIS::getOfficerList() {
     return officerList;
 }
-
 vector<TestKit> CTIS::getTestKitList() {
     return testKitList;
 }
-
 vector<TestCentre> CTIS::getTestCentreList() {
     return testCentreList;
+}
+vector<CovidTest> CTIS::getCovidTestList() {
+    return covidTestList;
 }
 
 CentreOfficer* CTIS::getOfficerByUsername(string uname)
@@ -71,6 +71,15 @@ Patient* CTIS::getPatientByUsername(string ptnName) {
     for (int i = 0; i < patientList.size(); i++){
         if (ptnName == patientList.at(i).getUsername()){
             return &patientList.at(i);
+        }
+    }
+    return NULL;
+}
+
+CovidTest* CTIS::getCovidTestByCTID(int cTestID){
+    for (int i = 0; i < covidTestList.size(); i++){
+        if (cTestID == covidTestList.at(i).getTestID()){
+            return &covidTestList.at(i);
         }
     }
     return NULL;
@@ -149,8 +158,8 @@ bool CTIS::isLoginPtnValid(string ptnUser, string ptnPwd) {
         if ((ptnUser == getPatientList().at(i).getUsername()) && (ptnPwd == getPatientList().at(i).getPassword())){
             return true;
         }
-        return false;
     }
+    return false;
 }
 
 bool CTIS::isTestCentreRegistered(string ctName){

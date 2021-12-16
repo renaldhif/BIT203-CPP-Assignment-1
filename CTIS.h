@@ -87,6 +87,48 @@ public:
 
 
 /**
+ * CovidTest Class
+ */
+
+class CovidTest{
+private:
+    int testID;
+    string testDate;
+    string result;
+    string resultDate;
+    string status;
+
+public:
+    // constructor
+    CovidTest();
+    // constructor with arguments
+    CovidTest(int inTestID, string inTestDate,string inResult, string inResultDate, string inStatus);
+
+    // destructor
+    ~CovidTest();
+    // setters
+    void setTestID(int inTestID);
+    void setTestDate (string inTestDate);
+    void setResult (string inResult) ;
+    void setResultDate (string inResultDate);
+    void setStatus (string inStatus);
+
+    void updateResult(string updatePtnType);
+    void updateResultDate(string updatePtnSympt);
+    void updateStatus(string updateStatus);
+    // getters
+
+    int getTestID();
+    string getTestDate();
+    string getResult();
+    string getResultDate();
+    string getStatus();
+
+    // to string
+    string toString();
+};
+
+/**
  * Centre Officer Class
  */
 class CentreOfficer : public User{
@@ -129,13 +171,14 @@ class Patient : public User{
 
 private:
     string patientType, symptoms;
+    CovidTest newCovidTest;
 
 public:
     // constructor
     Patient();
 
     // constructor with arguments
-    Patient(string inUName, string inPwd, string inFName, string inPtnType, string inPtnSymp);
+    Patient(string inUName, string inPwd, string inFName, string inPtnType, string inPtnSymp, CovidTest ctPtn);
 
     // destructor
     ~Patient();
@@ -147,9 +190,12 @@ public:
     void updatePatientType(string);
     void updateSymptoms(string);
 
+    void setCovidTestPtn(CovidTest ctPtn);
     // getters
     string getPatientType();
     string getSymptoms();
+
+    CovidTest getCovidTestPtn();
     // to string
     string toString();
 
@@ -162,44 +208,6 @@ public:
 };
 
 /**
- * CovidTest Class
- */
-
-class CovidTest{
-private:
-    int testID;
-    string testDate;
-    string result;
-    string resultDate;
-    string status;
-
-public:
-    // constructor
-    CovidTest();
-    // constructor with arguments
-    CovidTest(int inTestID, string inTestDate,string inResult, string inResultDate, string inStatus);
-
-    // destructor
-    ~CovidTest();
-    // setters
-    void setTestID(int inTestID);
-    void setTestDate (string inTestDate);
-    void setResult (string inResult) ;
-    void setResultDate (string inResultDate);
-    void setStatus (string inStatus);
-
-    // getters
-
-    int getTestID();
-    string getTestDate();
-    string getResult();
-    string getResultDate();
-    string getStatus();
-    // to string
-    string toString();
-};
-
-/**
  * CTIS Class
  */
 class CTIS{
@@ -208,6 +216,7 @@ private:
     vector<CentreOfficer> officerList;
     vector<TestKit> testKitList;
     vector<TestCentre> testCentreList;
+    vector<CovidTest> covidTestList;
 public:
     // Constructor
     CTIS();
@@ -220,12 +229,14 @@ public:
     void setOfficerList(CentreOfficer newOfficer);
     void setTestKitList(TestKit newTestKit);
     void setTestCentreList(TestCentre newTestCentre);
+    void setCovidTestList(CovidTest newCovidTestList);
 
     // getter
     vector<Patient> getPatientList();
     vector<CentreOfficer> getOfficerList();
     vector<TestKit> getTestKitList();
     vector<TestCentre> getTestCentreList();
+    vector<CovidTest> getCovidTestList();
 
     // other methods
     vector<Patient> showPatientList();
@@ -248,8 +259,8 @@ public:
     CentreOfficer* getOfficerByUsername(string uname);
     TestKit* getTestKitByKitID(int kitID);
     Patient* getPatientByUsername(string ptnName);
+    CovidTest* getCovidTestByCTID(int cTestID);
 };
-
 
 /**
  * TestKit class

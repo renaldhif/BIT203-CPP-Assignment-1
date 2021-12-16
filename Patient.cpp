@@ -16,12 +16,14 @@ Patient::Patient(){
 }
 
 // constructor with arguments
-Patient::Patient(string inUName, string inPwd, string inFName, string inPtnType, string inPtnSymp){
+Patient::Patient(string inUName, string inPwd, string inFName, string inPtnType, string inPtnSymp, CovidTest ctPtn){
     setUsername(inUName);
     setPassword(inPwd);
     setFullname(inFName);
     setPatientType(inPtnType);
     setSymptoms(inPtnSymp);
+    // aggregation
+    setCovidTestPtn(ctPtn);
 }
 
 // destructor
@@ -45,6 +47,10 @@ void Patient::updateSymptoms(string updatePtnSympt) {
     symptoms = updatePtnSympt;
 }
 
+// aggregation
+void Patient::setCovidTestPtn(CovidTest ctPtn) {
+    newCovidTest = ctPtn;
+}
 // getters
 string Patient::getPatientType(){
     return patientType;
@@ -52,6 +58,10 @@ string Patient::getPatientType(){
 
 string Patient::getSymptoms(){
     return symptoms;
+}
+
+CovidTest Patient::getCovidTestPtn() {
+    return newCovidTest;
 }
 
 // to string
