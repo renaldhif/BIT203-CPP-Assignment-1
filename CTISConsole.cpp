@@ -10,58 +10,61 @@
 #include <string>
 
 // Declare variables for user input and some variables have initialized values
-string firstname, lastname, username, password, fullname,
-        patientType, ctName, ptnSympt, tkName;
-int option = 10, option2 = 10, selectType, ctID, kitID, availQtyKit, cTestID;
+string usrInFN, usrInLN, usrUname, usrPwd, usrFlName,
+        inPtnType, ctNameReg, inPtnSymp, tkNameReg;
+
+int menuOpt = 10, menuOpt2 = 10,
+    slcPtnType, tctIDRand, tKitIDRand, availQtyKit, cvdTestIDRand;
+
 char op;
 
-CTIS ctismain;
+CTIS ctisexec;
 TestCentre tct;
 
 int main() {
-    while (option != 0) {
-        cout << "\nCTIS System.\nPlease Select Menu Below:" << endl;
+    while (menuOpt != 0) {
+        cout << "\nCTIS System.\nPlease select menu below:" << endl;
         cout << "\t[1] Register for Test Center Manager" << endl;
         cout << "\t[2] Login for Manager" << endl;
         cout << "\t[3] Login for Tester" << endl;
         cout << "\t[4] Login for Patient" << endl;
+        cout << "\t[5] Generate Test Report" << endl;
         cout << "\t[0] Exit" << endl;
-        cout << "Select number: ";
-        cin >> option;
+        cout << "Select menu number: ";
+        cin >> menuOpt;
 
-        switch (option) {
+        switch (menuOpt) {
             case 0:
-                cout << "Program closed.\nThank you.\nStay Healthy Stay safe.";
+                cout << "Program closed.\nThank you.\nStay safe and stay healthy";
                 break; // break case 0
 
             case 1: {
                 cout << "\nRegister a new account for Manager." << endl;
                 cout << "Enter First Name: ";
-                cin >> firstname;
+                cin >> usrInFN;
 
                 cout << "Enter Last name: ";
-                cin >> lastname;
+                cin >> usrInLN;
 
-                fullname = firstname + " " + lastname;
+                usrFlName = usrInFN + " " + usrInLN;
 
                 cout << "Enter username: ";
-                cin >> username;
+                cin >> usrUname;
 
-                while(ctismain.isManagerRegistered(username)){
+                while(ctisexec.isManagerRegistered(usrUname)){
                     cout << "Username has been taken." << endl;
                     cout << "Please try another one." << endl;
                     cout << "\nEnter username: ";
-                    cin >> username;
+                    cin >> usrUname;
                 }
 
                 cout << "Enter password: ";
-                cin >> password;
+                cin >> usrPwd;
 
                 // create new object centre officer
-                //CentreOfficer newManager(username, password, fullname, "Manager");
-                CentreOfficer newManager(username, password, fullname, "Manager",tct);
-                ctismain.setOfficerList(newManager);
-                cout << "Manager " << fullname << " has successfully registered!" << endl;
+                CentreOfficer newManager(usrUname, usrPwd, usrFlName, "Manager",tct);
+                ctisexec.setOfficerList(newManager);
+                cout << "Manager " << usrFlName << " has successfully registered!" << endl;
             }
                 break; // break case 1
 
@@ -69,34 +72,33 @@ int main() {
                 cout << "\nLogin for Test Center Manager." << endl;
 
                 cout << "Enter username: ";
-                cin >> username;
+                cin >> usrUname;
 
                 cout << "Enter password: ";
-                cin >> password;
+                cin >> usrPwd;
 
                 // validate if account exists
-                if (ctismain.isLoginMgrValid(username, password)) {
-                    CentreOfficer *ofcLoggedIn = ctismain.getOfficerByUsername(username);
+                if (ctisexec.isLoginMgrValid(usrUname, usrPwd)) {
+                    CentreOfficer *ofcLoggedIn = ctisexec.getOfficerByUsername(usrUname);
 
-                    cout << "\nWelcome Test Center Manager, " << username << endl;
+                    cout << "\nWelcome Test Center Manager, " << usrUname << endl;
                     cout << "Select menu below: " << endl;
                     cout << "\t[1] Register Test Centre" << endl;
                     cout << "\t[2] Record Tester" << endl;
                     cout << "\t[3] Manage Test Kit Stock" << endl;
-                    cout << "\t[4] Generate Report" << endl;
                     cout << "\t[0] Back" << endl;
-                    cout << "Input number: ";
-                    cin >> option2;
+                    cout << "Select menu number: ";
+                    cin >> menuOpt2;
                     cout << endl;
 
-                    while (!(option2 >= 0 && option2 <= 3)) {
+                    while (!(menuOpt2 >= 0 && menuOpt2 <= 3)) {
                         cout << "Please input valid number!" << endl;
-                        cout << "Input number: ";
-                        cin >> option2;
+                        cout << "Select menu number: ";
+                        cin >> menuOpt2;
                         cout << endl;
                     }
 
-                    switch (option2) {
+                    switch (menuOpt2) {
                         case 0:
                             break;
 
@@ -104,27 +106,26 @@ int main() {
                             cout << "Register Test Center " << endl;
                             cout << "Input centre name: ";
                             cin.ignore();
-                            getline(cin, ctName);
+                            getline(cin, ctNameReg);
 
-                            ctID = ctismain.randTCID();
-                            while (ctismain.isTestCentreRegistered(ctName)){
+                            tctIDRand = ctisexec.randTCID();
+                            while (ctisexec.isTestCentreRegistered(ctNameReg)){
                                 cout << "Test Centre name has been registered." << endl;
                                 cout << "Please try another one." << endl;
                                 cout << "\nInput centre name: ";
-                                getline(cin, ctName);
+                                getline(cin, ctNameReg);
                             }
-                            //TestCentre tct(ctID, ctName);
-                            TestCentre tct(ctID,ctName);
-                            ctismain.setTestCentreList(tct);
+                            TestCentre tct(tctIDRand,ctNameReg);
+                            ctisexec.setTestCentreList(tct);
                             ofcLoggedIn->setTestCentreOfc(tct);
 
                             cout << "Manager " <<  ofcLoggedIn->getFullname()
                                  << " registered at Test Centre " <<  ofcLoggedIn->getTestCentreOfc().getCentreName()
-                                 << ", with Test Centre ID: " << ctID
+                                 << ", with Test Centre ID: " << tctIDRand
                                  << " has successfully registered." << endl;
 
-                            for(int i =0; i < ctismain.getOfficerList().size(); i++) {
-                                cout << "check: "<<  ctismain.getOfficerList()[i].getTestCentreOfc().getCentreName();
+                            for(int i =0; i < ctisexec.getOfficerList().size(); i++) {
+                                cout << "check: "<<  ctisexec.getOfficerList()[i].getTestCentreOfc().getCentreName();
                             }
                             break;
                         }
@@ -132,46 +133,44 @@ int main() {
                         case 2: {
                             cout << "Record for new Tester ";
                             cout << "\nEnter First Name: ";
-                            cin >> firstname;
+                            cin >> usrInFN;
 
                             cout << "Enter Last name: ";
-                            cin >> lastname;
+                            cin >> usrInLN;
 
-                            fullname = firstname + " " + lastname;
+                            usrFlName = usrInFN + " " + usrInLN;
 
                             cout << "Enter username: ";
-                            cin >> username;
+                            cin >> usrUname;
 
-                            while(ctismain.isTesterRegistered(username)){
+                            while(ctisexec.isTesterRegistered(usrUname)){
                                 cout << "Username has been taken." << endl;
                                 cout << "Please try another one." << endl;
                                 cout << "\nEnter username: ";
-                                cin >> username;
+                                cin >> usrUname;
                             }
 
                             cout << "Enter password: ";
-                            cin >> password;
+                            cin >> usrPwd;
 
                             // create new object centre officer
                             TestCentre tctTester = ofcLoggedIn->getTestCentreOfc();
-                            CentreOfficer newTester(username, password, fullname, "Tester", tctTester);
-                            ctismain.setOfficerList(newTester);
 
-                            //for (int i = 0; i < ctismain.getTestCentreList().size(); i++){
-                                cout << "Tester " << fullname
-                                     << ", with username " << username
-                                     << ", assigned to: " << newTester.getTestCentreOfc().getCentreName()
-                                     << " has successfully registered." << endl;
-                           // }
-                            for(int i =0; i < ctismain.getOfficerList().size(); i++) {
-                                if(ctismain.getOfficerList()[i].getOfcPosition() == "Tester")
-                                    cout << "check: "<<  ctismain.getOfficerList()[i].getTestCentreOfc().getCentreName();
+                            CentreOfficer newTester(usrUname, usrPwd, usrFlName, "Tester", tctTester);
+                            ctisexec.setOfficerList(newTester);
+
+                            cout << "Tester " << usrFlName
+                                 << ", with username " << usrUname
+                                 << ", assigned to: " << newTester.getTestCentreOfc().getCentreName()
+                                 << " has successfully registered." << endl;
+
+                            for(int i =0; i < ctisexec.getOfficerList().size(); i++) {
+                                if(ctisexec.getOfficerList()[i].getOfcPosition() == "Tester")
+                                    cout << "check: "<<  ctisexec.getOfficerList()[i].getTestCentreOfc().getCentreName();
                             }
-
                             break;
                         }
-
-                            // record tester
+                        // record tester
 
                         case 3: {
                             cout << "Create a new test kit stock?:" << endl;
@@ -189,64 +188,60 @@ int main() {
 
                                 cout << "Enter test name: ";
                                 cin.ignore();
-                                getline(cin, tkName);
+                                getline(cin, tkNameReg);
 
-                                while (ctismain.isTestKitRegistered(tkName)){
+                                while (ctisexec.isTestKitRegistered(tkNameReg)){
                                     cout << "Test Kit name has been registered." << endl;
                                     cout << "Please try another one." << endl;
                                     cout << "\nInput Test Kit name: ";
-                                    getline(cin, tkName);
+                                    getline(cin, tkNameReg);
                                 }
 
                                 cout << "Input available kit stock: ";
                                 cin >> availQtyKit;
 
-                                kitID = ctismain.randKitID();
+                                tKitIDRand = ctisexec.randKitID();
                                 // create new TestKit object
-                                TestKit newTestKit(kitID, availQtyKit, tkName);
-                                ctismain.setTestKitList(newTestKit);
+                                TestKit newTestKit(tKitIDRand, availQtyKit, tkNameReg);
+                                ctisexec.setTestKitList(newTestKit);
 
-                                cout << "Test Kit " << tkName
-                                     << ", with ID " << kitID
+                                cout << "Test Kit " << tkNameReg
+                                     << ", with ID " << tKitIDRand
                                      << " has " << availQtyKit
                                      << " available stock successfully registered." << endl;
                             }
                             else if (op == 'N' || op == 'n') {
                                 cout << "Manage Test Kit Stock:" << endl;
                                 cout << "Input Kit ID: ";
-                                cin >> kitID;
+                                cin >> tKitIDRand;
                                 // search kit ID and update stock.
-                                for (int i = 0; i < ctismain.getTestKitList().size(); i++) {
-                                    while (kitID != ctismain.getTestKitList().at(i).getKitID()) {
+                                for (int i = 0; i < ctisexec.getTestKitList().size(); i++) {
+                                    while (tKitIDRand != ctisexec.getTestKitList()[i].getKitID()) {
                                         cout << "No Kit ID found. Please try again." << endl;
                                         cout << "Input Kit ID: ";
-                                        cin >> kitID;
+                                        cin >> tKitIDRand;
                                     }
-                                    if (kitID == ctismain.getTestKitList().at(i).getKitID()) {
+                                    if (tKitIDRand == ctisexec.getTestKitList()[i].getKitID()) {
                                         int currentQty, updQty;
-                                        TestKit *updateTestKit = ctismain.getTestKitByKitID(kitID);
-                                        currentQty = updateTestKit->getAvailableKit();
+                                        TestKit *updTKit = ctisexec.getTestKitByKitID(tKitIDRand);
+                                        currentQty = updTKit->getAvailableKit();
 
                                         cout << "Current available stock is: " << currentQty << endl;
                                         cout << "Update stock: ";
                                         cin >> updQty;
-                                        updateTestKit->addStock(updQty);
+                                        updTKit->addStock(updQty);
 
-                                        for(int i =0; i < ctismain.getTestKitList().size(); i++) {
-                                            cout << "Debug: " << ctismain.getTestKitList()[i].getAvailableKit();
+                                        for(int i =0; i < ctisexec.getTestKitList().size(); i++) {
+                                            cout << "Debug: " << ctisexec.getTestKitList()[i].getAvailableKit();
                                         }
 
                                         cout << "\nStock updated!" << endl;
-                                        cout << "Stock updated: " << updateTestKit->getAvailableKit() << endl;
+                                        cout << "Stock updated: " << updTKit->getAvailableKit() << endl;
                                     }
                                 }
                             }
                             break;
                         }
-
-                        case 4:
-                            cout << "Report details: " << endl;
-                            break;
 
                         default:
                             cout << "Wrong number. Please input valid number";
@@ -261,22 +256,22 @@ int main() {
             case 3:
                 cout << "\nLogin for an existing account for Tester." << endl;
                 cout << "Enter username: ";
-                cin >> username;
+                cin >> usrUname;
 
                 cout << "Enter password: ";
-                cin >> password;
-                if (ctismain.isLoginTstValid(username, password)) {
-                    cout << "\nWelcome Tester, " << username;
+                cin >> usrPwd;
+                if (ctisexec.isLoginTstValid(usrUname, usrPwd)) {
+                    cout << "\nWelcome Tester, " << usrUname;
 
                     cout << "\nSelect menu below: ";
                     cout << "\n\t[1] Record New Test" << endl;
                     cout << "\t[2] Update Test Result" << endl;
                     cout << "\t[0] Back" << endl;
-                    cout << "Select number: ";
-                    cin >> option2;
+                    cout << "Select menu number:: ";
+                    cin >> menuOpt2;
                     cout << endl;
 
-                    switch (option2) {
+                    switch (menuOpt2) {
                         case 0:
                             break;
 
@@ -293,24 +288,25 @@ int main() {
                             if (op == 'N' || op == 'n') {
                                 cout << "\nRecord for new account Patient: " << endl;
                                 cout << "Enter First Name: ";
-                                cin >> firstname;
-                                cout << "Enter Last name: ";
-                                cin >> lastname;
+                                cin >> usrInFN;
 
-                                fullname = firstname + " " + lastname;
+                                cout << "Enter Last name: ";
+                                cin >> usrInLN;
+
+                                usrFlName = usrInFN + " " + usrInLN;
 
                                 cout << "Enter username: ";
-                                cin >> username;
+                                cin >> usrUname;
 
-                                while(ctismain.isPatientRegistered(username)){
+                                while(ctisexec.isPatientRegistered(usrUname)){
                                     cout << "Username has been taken." << endl;
                                     cout << "Please try another one." << endl;
                                     cout << "\nEnter username: ";
-                                    cin >> username;
+                                    cin >> usrUname;
                                 }
 
                                 cout << "Enter password: ";
-                                cin >> password;
+                                cin >> usrPwd;
 
                                 cout << "\nWhich type of patient?" << endl;
                                 cout << "\t[1]. Returnee\n";
@@ -318,43 +314,44 @@ int main() {
                                 cout << "\t[3]. Close contact\n";
                                 cout << "\t[4]. Infected\n";
                                 cout << "\t[5]. Suspected\n";
-                                cout << "Select number: ";
-                                cin >> selectType;
+                                cout << "Select patient type number: ";
+                                cin >> slcPtnType;
 
-                                while (selectType < 1 || selectType > 5) {
+                                while (slcPtnType < 1 || slcPtnType > 5) {
                                     cout << "\nError!\nPlease input valid number.";
-                                    cout << "Select number: ";
-                                    cin >> selectType;
+                                    cout << "Select patient type number: ";
+                                    cin >> slcPtnType;
                                 }
 
-                                switch (selectType) {
+                                switch (slcPtnType) {
                                     case 1:
-                                        patientType = "Returnee";
+                                        inPtnType = "Returnee";
                                         break;
 
                                     case 2:
-                                        patientType = "Quarantined";
+                                        inPtnType = "Quarantined";
                                         break;
 
                                     case 3:
-                                        patientType = "Close contact";
+                                        inPtnType = "Close contact";
                                         break;
 
                                     case 4:
-                                        patientType = "Infected";
+                                        inPtnType = "Infected";
                                         break;
 
                                     case 5:
-                                        patientType = "Suspected";
+                                        inPtnType = "Suspected";
                                         break;
                                 }
+
                                 cout << "Input symptoms: ";
                                 cin.ignore();
-                                getline(cin,ptnSympt);
+                                getline(cin,inPtnSymp);
 
                                 // create covid test
                                 // get covid test id
-                                cTestID = ctismain.randCTestID();
+                                cvdTestIDRand = ctisexec.randCTestID();
                                 // get date
                                 // local time from ctime library
                                 time_t locSysTime = time(NULL); // current system date
@@ -362,37 +359,36 @@ int main() {
                                 char curDateToStr[50];
                                 strftime(curDateToStr, 50, "%d %B %Y at %T", locSysTimePtr);
 
-                                CovidTest newCovidTest(cTestID,curDateToStr,"No Data", "No Data", "Pending");
-                                ctismain.setCovidTestList(newCovidTest);
+                                CovidTest newCovidTest(cvdTestIDRand,curDateToStr,"No Data", "No Data", "Pending");
+                                ctisexec.setCovidTestList(newCovidTest);
 
                                 // create object patient
-                                Patient newPatient(username, password, fullname, patientType, ptnSympt, newCovidTest);
-                                ctismain.setPatientList(newPatient);
-                                cout << "Debug strftime: " << curDateToStr << endl;
+                                Patient newPatient(usrUname, usrPwd, usrFlName, inPtnType, inPtnSymp, newCovidTest);
+                                ctisexec.setPatientList(newPatient);
 
-                                cout << "\nPatient " << fullname
-                                     << ", Type: " << patientType
-                                     << ", with username " << username
-                                     << ", with symptoms " << ptnSympt
+                                cout << "\nPatient " << usrFlName
+                                     << ", Type: " << inPtnType
+                                     << ", with username " << usrUname
+                                     << ", with symptoms " << inPtnSymp
                                      << " has successfully registered."
-                                     << "\nCovid Test ID: " << cTestID
+                                     << "\nCovid Test ID: " << cvdTestIDRand
                                      << ", registered at " << curDateToStr
                                      << endl;
                             }
                             else if (op == 'Y' || op == 'y'){
                                 cout << "Updating data patient..." << endl;
                                 cout << "Input patient's username: ";
-                                cin >> username;
+                                cin >> usrUname;
                                 // search kit ID and update stock.
-                                for (int i = 0; i < ctismain.getPatientList().size(); i++) {
-                                    while (username != ctismain.getPatientList().at(i).getUsername()) {
+                                for (int i = 0; i < ctisexec.getPatientList().size(); i++) {
+                                    while (usrUname != ctisexec.getPatientList()[i].getUsername()) {
                                         cout << "\nUsername not found. Please try again." << endl;
                                         cout << "Input patient's username: ";
-                                        cin >> username;
+                                        cin >> usrUname;
                                     }
-                                    if (username == ctismain.getPatientList().at(i).getUsername()) {
+                                    if (usrUname == ctisexec.getPatientList()[i].getUsername()) {
                                         string currentPtnType, updatePtnType, currentPtnSympt, updatePtnSympt;
-                                        Patient *updatePatient = ctismain.getPatientByUsername(username);
+                                        Patient *updatePatient = ctisexec.getPatientByUsername(usrUname);
 
                                         currentPtnType = updatePatient->getPatientType();
                                         currentPtnSympt = updatePatient->getSymptoms();
@@ -406,16 +402,16 @@ int main() {
                                         cout << "\t[3]. Close contact\n";
                                         cout << "\t[4]. Infected\n";
                                         cout << "\t[5]. Suspected\n";
-                                        cout << "Select update number: ";
-                                        cin >> selectType;
+                                        cout << "Select update type number: ";
+                                        cin >> slcPtnType;
 
-                                        while (selectType < 1 || selectType > 5) {
+                                        while (slcPtnType < 1 || slcPtnType > 5) {
                                             cout << "\nError!\nPlease input valid number.";
-                                            cout << "Select update number: ";
-                                            cin >> selectType;
+                                            cout << "Select update type number: ";
+                                            cin >> slcPtnType;
                                         }
 
-                                        switch (selectType) {
+                                        switch (slcPtnType) {
                                             case 1:
                                                 updatePtnType = "Returnee";
                                                 break;
@@ -446,9 +442,9 @@ int main() {
                                         cout << "Type updated: " << updatePatient->getPatientType() << endl;
                                         cout << "Symptoms updated: " << updatePatient->getSymptoms() << endl;
 
-                                        for(int i =0; i < ctismain.getPatientList().size(); i++) {
-                                            cout << "Debug: " << ctismain.getPatientList()[i].getPatientType() << endl;
-                                            cout << "Debug: " << ctismain.getPatientList()[i].getSymptoms() << endl;
+                                        for(int i =0; i < ctisexec.getPatientList().size(); i++) {
+                                            cout << "Debug: " << ctisexec.getPatientList()[i].getPatientType() << endl;
+                                            cout << "Debug: " << ctisexec.getPatientList()[i].getSymptoms() << endl;
                                         }
                                     }
                                 }
@@ -456,32 +452,31 @@ int main() {
                             break;
                         }
 
-
                         case 2:
                             // use case 5
                             cout << "Update test result... " << endl;
                             cout << "Input test ID to retrieve the test details: ";
-                            cin >> cTestID;
-                            for (int i = 0; i < ctismain.getCovidTestList().size(); i++){
-                                while (cTestID != ctismain.getCovidTestList().at(i).getTestID()) {
+                            cin >> cvdTestIDRand;
+                            for (int i = 0; i < ctisexec.getCovidTestList().size(); i++){
+                                while (cvdTestIDRand != ctisexec.getCovidTestList()[i].getTestID()) {
                                     cout << "\nNo Covid Test ID found. Please try again." << endl;
                                     cout << "Input test ID to retrieve the test details: ";
-                                    cin >> cTestID;
+                                    cin >> cvdTestIDRand;
                                 }
-                                if (cTestID == ctismain.getCovidTestList().at(i).getTestID()) {
+                                if (cvdTestIDRand == ctisexec.getCovidTestList()[i].getTestID()) {
                                     string upRes, upResDate, upStt;
-                                    //TestKit *updateTestKit = ctismain.getTestKitByKitID(cTestID);
-                                    CovidTest *updateCTResult = ctismain.getCovidTestByCTID(cTestID);
-                                    cout << "\nData Covid Test ID " << updateCTResult->getTestID() << ": " << endl;
-                                    cout << "\tTest Date: " << updateCTResult->getTestDate()<< endl;
-                                    cout << "\tResult: " << updateCTResult->getResult() << endl;
-                                    cout << "\tResult Date: " << updateCTResult->getResultDate() << endl;
-                                    cout << "\tStatus: " << updateCTResult->getStatus() << endl;
+                                    //TestKit *updTKit = ctisexec.getTestKitByKitID(cvdTestIDRand);
+                                    CovidTest *updCvdTest = ctisexec.getCovidTestByCTID(cvdTestIDRand);
+                                    cout << "\nData Covid Test ID " << updCvdTest->getTestID() << ": " << endl;
+                                    cout << "\tTest Date: " << updCvdTest->getTestDate()<< endl;
+                                    cout << "\tResult: " << updCvdTest->getResult() << endl;
+                                    cout << "\tResult Date: " << updCvdTest->getResultDate() << endl;
+                                    cout << "\tStatus: " << updCvdTest->getStatus() << endl;
                                     cout << "\nUpdate result: ";
                                     cin.ignore();
                                     getline(cin, upRes);
                                     // update
-                                    updateCTResult->updateResult(upRes);
+                                    updCvdTest->updateResult(upRes);
 
                                     time_t locSysTime = time(NULL); // current system date
                                     tm* locSysTimePtr = localtime(&locSysTime);
@@ -490,24 +485,24 @@ int main() {
 
                                     upResDate = curDateToStr;
                                     // update
-                                    updateCTResult->updateResultDate(upResDate);
+                                    updCvdTest->updateResultDate(upResDate);
 
                                     upStt = "Completed";
                                     // update
-                                    updateCTResult->updateStatus(upStt);
+                                    updCvdTest->updateStatus(upStt);
 
-                                    for(int i =0; i < ctismain.getCovidTestList().size(); i++) {
-                                        cout << "Debug Result: " << ctismain.getCovidTestList()[i].getResult() << endl;
-                                        cout << "Debug Result Date: " << ctismain.getCovidTestList()[i].getResultDate() << endl;
-                                        cout << "Debug Status: " << ctismain.getCovidTestList()[i].getStatus() << endl;
+                                    for(int i =0; i < ctisexec.getCovidTestList().size(); i++) {
+                                        cout << "Debug Result: " << ctisexec.getCovidTestList()[i].getResult() << endl;
+                                        cout << "Debug Result Date: " << ctisexec.getCovidTestList()[i].getResultDate() << endl;
+                                        cout << "Debug Status: " << ctisexec.getCovidTestList()[i].getStatus() << endl;
                                     }
 
                                     cout << "\nData Test updated!" << endl;
-                                    cout << "Covid Test with ID: " << updateCTResult->getTestID()
-                                         << ", registered at: " << updateCTResult->getTestDate()
-                                         << ", result is " << updateCTResult->getResult()
-                                         << ", was updated at " << updateCTResult->getResultDate()
-                                         << ", status now " << updateCTResult->getStatus()
+                                    cout << "Covid Test with ID: " << updCvdTest->getTestID()
+                                         << ", registered at: " << updCvdTest->getTestDate()
+                                         << ", result is " << updCvdTest->getResult()
+                                         << ", was updated at " << updCvdTest->getResultDate()
+                                         << ", status now " << updCvdTest->getStatus()
                                          << endl;
                                 }
                             }
@@ -520,37 +515,31 @@ int main() {
                     break; // break case 4
 
                     case 4:
+                    // use case 6
                     cout << "Login for an existing account for Patient." << endl;
                     cout << "Enter username: ";
-                    cin >> username;
+                    cin >> usrUname;
 
                     cout << "Enter password: ";
-                    cin >> password;
+                    cin >> usrPwd;
 
-                    if (ctismain.isLoginPtnValid(username, password)){
-                        cout << "\nWelcome patient, " << username;
+                    if (ctisexec.isLoginPtnValid(usrUname, usrPwd)){
+                        cout << "\nWelcome patient, " << usrUname;
                         cout << "\nDo you want to view a Test Report?";
                         cout << "\n\t[(Y)es / (N)o]: ";
                         cin >> op;
 
                         if (op == 'y' || op == 'Y') {
                             cout << "\nTest Report Patient's detail: " << endl;
-                            //for (int i = 0; i < ctismain.getPatientList().size(); i++){
-                                //if (ctismain.isLoginPtnValid(username,password)){
-                                Patient *patientLoggedIn = ctismain.getPatientByUsername(username);
-                                //for(int j = 0; j < ctismain.getCovidTestList().size(); j++){
 
-                                        cout << " Patient name: " << patientLoggedIn->getFullname()
-                                             << ", has taken a test covid test with ID: " << patientLoggedIn->getCovidTestPtn().getTestID()
-                                             << ", registered on: " << patientLoggedIn->getCovidTestPtn().getTestDate()
-                                             << ", result is " << patientLoggedIn->getCovidTestPtn().getResult()
-                                             << ", was updated on " << patientLoggedIn->getCovidTestPtn().getResultDate()
-                                             << ", status now " << patientLoggedIn->getCovidTestPtn().getStatus()
-                                             << endl;
-                                    //}
-
-
-
+                            Patient *patientLoggedIn = ctisexec.getPatientByUsername(usrUname);
+                            cout << " Patient name: " << patientLoggedIn->getFullname()
+                                 << ", has taken a test covid test with ID: " << patientLoggedIn->getCovidTestPtn().getTestID()
+                                 << ", registered on: " << patientLoggedIn->getCovidTestPtn().getTestDate()
+                                 << ", result is " << patientLoggedIn->getCovidTestPtn().getResult()
+                                 << ", was updated on " << patientLoggedIn->getCovidTestPtn().getResultDate()
+                                 << ", status now " << patientLoggedIn->getCovidTestPtn().getStatus()
+                                 << endl;
                         }
                         else {
                             // exit;
@@ -558,15 +547,13 @@ int main() {
                     }
                     else{
                         cout << "No account patient matched." << endl;
-                        cout << "Please try again" << endl;
                     }
-
                     break; // break case 5
 
-                    case 9:
-                        cout << "Debugging!" << endl;
-                    cout << "Patient List: ";
-//                cout << CTIS::showPatientList();
+                    case 5:
+                        cout << "Report details: " << endl;
+                    break;
+
                     default:
                         cout << "Wrong input. Please enter the valid number.";
                 }

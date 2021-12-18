@@ -85,14 +85,6 @@ CovidTest* CTIS::getCovidTestByCTID(int cTestID){
     return NULL;
 }
 
-// other methods
-//vector<Patient> CTIS::showPatientList(){
-////    string strPtnList = "";
-////    for (int i = 0; i < patientList.size(); i++){
-////        //cout << patientList[i] << endl;
-////    }
-//}
-
 // generate an unique int number from 0 - 10
 // for Test Centre ID
 int CTIS::randTCID(){

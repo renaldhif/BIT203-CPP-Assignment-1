@@ -25,7 +25,6 @@ class TestKit;
  * Class User is an abstract base class for class Patient and class CentreOfficer
  *
  */
-
 class User{
 private:
     string username, password, fullname;
@@ -48,6 +47,7 @@ public:
     string getFullname();
 
     // Method for View Testing History
+    // pure virtual function
     virtual string viewTestHistory() = 0;
 
     // to String method
@@ -58,7 +58,6 @@ public:
 /**
  * Test Centre Class
  */
-
 class TestCentre {
 private:
     int centreID;
@@ -85,11 +84,9 @@ public:
     string toString();
 };
 
-
 /**
  * CovidTest Class
  */
-
 class CovidTest{
 private:
     int testID;
@@ -238,8 +235,15 @@ public:
     vector<TestCentre> getTestCentreList();
     vector<CovidTest> getCovidTestList();
 
+    // getter for object using pointer that points to the index of vector
+    CentreOfficer* getOfficerByUsername(string uname);
+    TestKit* getTestKitByKitID(int kitID);
+    Patient* getPatientByUsername(string ptnName);
+    CovidTest* getCovidTestByCTID(int cTestID);
+
     // other methods
     vector<Patient> showPatientList();
+
     // generate rand numb
     int randTCID();
     int randKitID();
@@ -256,10 +260,6 @@ public:
     bool isTesterRegistered(string tstUser);
     bool isPatientRegistered(string ptnUser);
 
-    CentreOfficer* getOfficerByUsername(string uname);
-    TestKit* getTestKitByKitID(int kitID);
-    Patient* getPatientByUsername(string ptnName);
-    CovidTest* getCovidTestByCTID(int cTestID);
 };
 
 /**
@@ -285,6 +285,8 @@ public:
     void setKitID(int);
     void setAvailableKit(int);
     void setTestName(string);
+    // update stock
+    void addStock(int newAdd);
 
     // getters
     int getKitID();
@@ -292,13 +294,5 @@ public:
     string getTestName();
     // to string
     string toString();
-    void addStock(int newAdd);
-
-        // other methods
-
-//
-//        int getUpdatedKit(){
-//            return
-//        }
 };
 #endif //ASSIGNMENT_1_CTIS_H
