@@ -1,6 +1,11 @@
-//
-// Created by Renaldhi Fahrezi on 03-Dec-21.
-//
+/**
+ *
+ * @author      : Renaldhi Fahrezi
+ * Student ID   : E1900355
+ *
+ */
+
+// include guards
 #ifndef ASSIGNMENT_1_CTIS_H
 #define ASSIGNMENT_1_CTIS_H
 
@@ -8,10 +13,11 @@
 #include <string>
 #include <vector>
 #include <cstdlib> // import rand srand
-#include <ctime>
+#include <ctime> // import time library
 
 using namespace std;
 
+// classes declaration
 class User;
 class CTIS;
 class TestCentre;
@@ -22,7 +28,15 @@ class TestKit;
 
 /**
  *
- * Class User is an abstract base class for class Patient and class CentreOfficer
+ * Class User is an abstract and base class
+ * that inherits class Patient and class CentreOfficer
+ * as derived classes.
+ *
+ * It has username, password, and fullname attributes,
+ * prototype constructor and constructor with arguments,
+ * prototype setter and getter method for each attributes,
+ * and prototype pure virtual function
+ * for view test history.
  *
  */
 class User{
@@ -37,26 +51,27 @@ public:
 
     // destructor
     ~User();
+
     // setters
     void setUsername(string inUName);
     void setPassword(string inPwd);
     void setFullname(string inFName);
+
     // getters
     string getUsername();
     string getPassword();
     string getFullname();
 
-    // Method for View Testing History
     // pure virtual function
     virtual string viewTestHistory() = 0;
-
-    // to String method
-    string toString();
-
 };
 
 /**
- * Test Centre Class
+ * Test Centre Class.
+ *
+ * It has centreID and centreName attributes,
+ * prototype constructor and constructor with arguments,
+ * prototype setter and getter method for each attributes
  */
 class TestCentre {
 private:
@@ -80,12 +95,17 @@ public:
     // getters
     int getCentreID();
     string getCentreName();
-    // to string
-    string toString();
 };
 
 /**
  * CovidTest Class
+ *
+ * It has testID, testDate,
+ *          result, resultDate,
+ *          and status attributes,
+ * prototype constructor and constructor with arguments,
+ * prototype setter and getter method for each attributes,
+ * and prototype additional method for updating attributes
  */
 class CovidTest{
 private:
@@ -98,11 +118,13 @@ private:
 public:
     // constructor
     CovidTest();
+
     // constructor with arguments
     CovidTest(int inTestID, string inTestDate,string inResult, string inResultDate, string inStatus);
 
     // destructor
     ~CovidTest();
+
     // setters
     void setTestID(int inTestID);
     void setTestDate (string inTestDate);
@@ -110,23 +132,27 @@ public:
     void setResultDate (string inResultDate);
     void setStatus (string inStatus);
 
+    // additional methods for updating attributes
     void updateResult(string updatePtnType);
     void updateResultDate(string updatePtnSympt);
     void updateStatus(string updateStatus);
-    // getters
 
+    // getters
     int getTestID();
     string getTestDate();
     string getResult();
     string getResultDate();
     string getStatus();
-
-    // to string
-    string toString();
 };
 
 /**
- * Centre Officer Class
+ * Centre Officer Class is a derived class from User class.
+ *
+ * It has User class attributes,
+ *          ofcPosition and TestCentre aggregation attribute,
+ * prototype constructor and constructor with arguments,
+ * prototype setter and getter method for each attributes,
+ * and prototype viewTestHistory.
  */
 class CentreOfficer : public User{
 
@@ -150,19 +176,23 @@ public:
     string getOfcPosition();
     TestCentre getTestCentreOfc();
 
-    // to string
-    string toString();
 
     /**
-     * Method for View Testing History
+     * Method for View Test History
      * and overrides the method from the base class (User class)
      */
-
     string viewTestHistory() override;
 
 };
+
 /**
- * Patient Class
+ * Patient Class is a derived class from User class.
+ *
+ * It has User class attributes,
+ *          patientType, symptoms, and CovidTest aggregation attribute,
+ * prototype constructor and constructor with arguments,
+ * prototype setter and getter method for each attributes,
+ * and prototype viewTestHistory.
  */
 class Patient : public User{
 
@@ -193,19 +223,25 @@ public:
     string getSymptoms();
 
     CovidTest getCovidTestPtn();
-    // to string
-    string toString();
 
     /**
      * Method for View Testing History
      * and overrides the method from the base class (User class)
      */
-
     string viewTestHistory() override;
 };
 
 /**
- * CTIS Class
+ * CTIS Class.
+ *
+ * It has vectors attribute from other classes such as
+ * patientList, officerList, testKitList, testCentreList, and covidTestList,
+ * prototype constructor,
+ * prototype setter and getter method for each attributes,
+ * prototype additional getter methods for getting the memory address of each vectors,
+ * prototype additional methods for generating random numbers,
+ * validator for login, and validator unique name.
+ *
  */
 class CTIS{
 private:
@@ -241,31 +277,33 @@ public:
     Patient* getPatientByUsername(string ptnName);
     CovidTest* getCovidTestByCTID(int cTestID);
 
-    // other methods
-    vector<Patient> showPatientList();
-
-    // generate rand numb
+    // generate random numbers
+    // for TestCentre ID, Kit ID, and CovidTest ID
     int randTCID();
     int randKitID();
     int randCTestID();
 
-    // validator for login
+    // validator for login Centre Officer (Manager/Tester) and Patient.
     bool isLoginMgrValid(string ofcUser, string ofcPwd);
     bool isLoginTstValid(string tstUser, string tstPwd);
     bool isLoginPtnValid(string ptnUser, string ptnPwd);
+
     // validator for unique name
     bool isTestCentreRegistered(string ctName);
     bool isTestKitRegistered(string tkName);
     bool isManagerRegistered(string mgrUser);
     bool isTesterRegistered(string tstUser);
     bool isPatientRegistered(string ptnUser);
-
 };
 
 /**
- * TestKit class
+ * Test Kit Class.
+ *
+ * It has kitID, availableKit, and testName attributes,
+ * prototype constructor and constructor with arguments,
+ * prototype setter and getter method for each attributes,
+ * and additional methods for updating the attributes.
  */
-
 class TestKit{
 private:
     int kitID, availableKit;
@@ -285,14 +323,14 @@ public:
     void setKitID(int);
     void setAvailableKit(int);
     void setTestName(string);
+
     // update stock
     void addStock(int newAdd);
+    void decStock();
 
     // getters
     int getKitID();
     int getAvailableKit();
     string getTestName();
-    // to string
-    string toString();
 };
 #endif //ASSIGNMENT_1_CTIS_H

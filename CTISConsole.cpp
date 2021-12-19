@@ -2,7 +2,6 @@
  *
  * @author      : Renaldhi Fahrezi
  * Student ID   : E1900355
- * Date created : 8 December 2021
  *
  */
 #include "CTIS.h"
@@ -123,10 +122,6 @@ int main() {
                                  << " registered at Test Centre " <<  ofcLoggedIn->getTestCentreOfc().getCentreName()
                                  << ", with Test Centre ID: " << tctIDRand
                                  << " has successfully registered." << endl;
-
-                            for(int i =0; i < ctisexec.getOfficerList().size(); i++) {
-                                cout << "check: "<<  ctisexec.getOfficerList()[i].getTestCentreOfc().getCentreName();
-                            }
                             break;
                         }
 
@@ -164,10 +159,6 @@ int main() {
                                  << ", assigned to: " << newTester.getTestCentreOfc().getCentreName()
                                  << " has successfully registered." << endl;
 
-                            for(int i =0; i < ctisexec.getOfficerList().size(); i++) {
-                                if(ctisexec.getOfficerList()[i].getOfcPosition() == "Tester")
-                                    cout << "check: "<<  ctisexec.getOfficerList()[i].getTestCentreOfc().getCentreName();
-                            }
                             break;
                         }
                         // record tester
@@ -231,12 +222,8 @@ int main() {
                                         cin >> updQty;
                                         updTKit->addStock(updQty);
 
-                                        for(int i =0; i < ctisexec.getTestKitList().size(); i++) {
-                                            cout << "Debug: " << ctisexec.getTestKitList()[i].getAvailableKit();
-                                        }
-
                                         cout << "\nStock updated!" << endl;
-                                        cout << "Stock updated: " << updTKit->getAvailableKit() << endl;
+                                        cout << "Stock after updated: " << updTKit->getAvailableKit() << endl;
                                     }
                                 }
                             }
@@ -270,6 +257,13 @@ int main() {
                     cout << "Select menu number:: ";
                     cin >> menuOpt2;
                     cout << endl;
+
+                    while (!(menuOpt2 >= 0 && menuOpt2 <= 2)) {
+                        cout << "Please input valid number!" << endl;
+                        cout << "Select menu number: ";
+                        cin >> menuOpt2;
+                        cout << endl;
+                    }
 
                     switch (menuOpt2) {
                         case 0:
@@ -318,7 +312,7 @@ int main() {
                                 cin >> slcPtnType;
 
                                 while (slcPtnType < 1 || slcPtnType > 5) {
-                                    cout << "\nError!\nPlease input valid number.";
+                                    cout << "\nPlease input valid number." << endl;
                                     cout << "Select patient type number: ";
                                     cin >> slcPtnType;
                                 }
@@ -555,7 +549,7 @@ int main() {
                     break;
 
                     default:
-                        cout << "Wrong input. Please enter the valid number.";
+                        cout << "Wrong input. Please enter the valid number." << endl;
                 }
                 else{
                     cout << "Sorry. No account matched." << endl;
