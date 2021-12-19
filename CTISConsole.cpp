@@ -50,6 +50,7 @@ int main() {
                 cout << "Enter username: ";
                 cin >> usrUname;
 
+                // if username has been taken
                 while(ctisexec.isManagerRegistered(usrUname)){
                     cout << "Username has been taken." << endl;
                     cout << "Please try another one." << endl;
@@ -60,7 +61,7 @@ int main() {
                 cout << "Enter password: ";
                 cin >> usrPwd;
 
-                // create new object centre officer
+                // create new object centre officer as a manager
                 CentreOfficer newManager(usrUname, usrPwd, usrFlName, "Manager",tct);
                 ctisexec.setOfficerList(newManager);
                 cout << "Manager " << usrFlName << " has successfully registered!" << endl;
@@ -78,6 +79,7 @@ int main() {
 
                 // validate if account exists
                 if (ctisexec.isLoginMgrValid(usrUname, usrPwd)) {
+                    // get the vector address of CentreOfficer based on username logged in
                     CentreOfficer *ofcLoggedIn = ctisexec.getOfficerByUsername(usrUname);
 
                     cout << "\nWelcome Test Center Manager, " << usrUname << endl;
@@ -107,14 +109,17 @@ int main() {
                             cin.ignore();
                             getline(cin, ctNameReg);
 
-                            tctIDRand = ctisexec.randTCID();
                             while (ctisexec.isTestCentreRegistered(ctNameReg)){
                                 cout << "Test Centre name has been registered." << endl;
                                 cout << "Please try another one." << endl;
                                 cout << "\nInput centre name: ";
                                 getline(cin, ctNameReg);
                             }
+                            // generate random number
+                            tctIDRand = ctisexec.randTCID();
+
                             TestCentre tct(tctIDRand,ctNameReg);
+                            // sets the test centre into the officer
                             ctisexec.setTestCentreList(tct);
                             ofcLoggedIn->setTestCentreOfc(tct);
 
@@ -138,6 +143,7 @@ int main() {
                             cout << "Enter username: ";
                             cin >> usrUname;
 
+                            // if username has been taken
                             while(ctisexec.isTesterRegistered(usrUname)){
                                 cout << "Username has been taken." << endl;
                                 cout << "Please try another one." << endl;
@@ -148,9 +154,10 @@ int main() {
                             cout << "Enter password: ";
                             cin >> usrPwd;
 
-                            // create new object centre officer
+                            // get the vector address of CentreOfficer's TestCentre
                             TestCentre tctTester = ofcLoggedIn->getTestCentreOfc();
 
+                            // create new object centre officer
                             CentreOfficer newTester(usrUname, usrPwd, usrFlName, "Tester", tctTester);
                             ctisexec.setOfficerList(newTester);
 
@@ -181,6 +188,7 @@ int main() {
                                 cin.ignore();
                                 getline(cin, tkNameReg);
 
+                                // if Test Kit exists
                                 while (ctisexec.isTestKitRegistered(tkNameReg)){
                                     cout << "Test Kit name has been registered." << endl;
                                     cout << "Please try another one." << endl;
@@ -191,6 +199,7 @@ int main() {
                                 cout << "Input available kit stock: ";
                                 cin >> availQtyKit;
 
+                                // generate random number for test kit ID
                                 tKitIDRand = ctisexec.randKitID();
                                 // create new TestKit object
                                 TestKit newTestKit(tKitIDRand, availQtyKit, tkNameReg);
@@ -205,7 +214,7 @@ int main() {
                                 cout << "Manage Test Kit Stock:" << endl;
                                 cout << "Input Kit ID: ";
                                 cin >> tKitIDRand;
-                                // search kit ID and update stock.
+                                // search for kit ID and update stock.
                                 for (int i = 0; i < ctisexec.getTestKitList().size(); i++) {
                                     while (tKitIDRand != ctisexec.getTestKitList()[i].getKitID()) {
                                         cout << "No Kit ID found. Please try again." << endl;
@@ -214,6 +223,7 @@ int main() {
                                     }
                                     if (tKitIDRand == ctisexec.getTestKitList()[i].getKitID()) {
                                         int currentQty, updQty;
+                                        // get the vector address of TestKit based on kitID
                                         TestKit *updTKit = ctisexec.getTestKitByKitID(tKitIDRand);
                                         currentQty = updTKit->getAvailableKit();
 
@@ -343,22 +353,27 @@ int main() {
                                 cin.ignore();
                                 getline(cin,inPtnSymp);
 
-                                // create covid test
-                                // get covid test id
+                                // generate random number for covid test id
                                 cvdTestIDRand = ctisexec.randCTestID();
                                 // get date
-                                // local time from ctime library
                                 time_t locSysTime = time(NULL); // current system date
+                                // local time from ctime library
                                 tm* locSysTimePtr = localtime(&locSysTime);
                                 char curDateToStr[50];
+                                // to string format for date in (Day Month Year, HH:MM)
                                 strftime(curDateToStr, 50, "%d %B %Y at %T", locSysTimePtr);
 
+                                // create covid test object
                                 CovidTest newCovidTest(cvdTestIDRand,curDateToStr,"No Data", "No Data", "Pending");
                                 ctisexec.setCovidTestList(newCovidTest);
 
                                 // create object patient
                                 Patient newPatient(usrUname, usrPwd, usrFlName, inPtnType, inPtnSymp, newCovidTest);
                                 ctisexec.setPatientList(newPatient);
+
+                                // decrement the stock kit after patient is recorded.
+                                TestKit *updTKit = ctisexec.getTestKitByKitID(tKitIDRand);
+                                updTKit->decStock();
 
                                 cout << "\nPatient " << usrFlName
                                      << ", Type: " << inPtnType
@@ -382,10 +397,11 @@ int main() {
                                     }
                                     if (usrUname == ctisexec.getPatientList()[i].getUsername()) {
                                         string currentPtnType, updatePtnType, currentPtnSympt, updatePtnSympt;
-                                        Patient *updatePatient = ctisexec.getPatientByUsername(usrUname);
+                                        // get the vector address of Patient based on username logged in
+                                        Patient *updPtn = ctisexec.getPatientByUsername(usrUname);
 
-                                        currentPtnType = updatePatient->getPatientType();
-                                        currentPtnSympt = updatePatient->getSymptoms();
+                                        currentPtnType = updPtn->getPatientType();
+                                        currentPtnSympt = updPtn->getSymptoms();
 
                                         cout << "Current patient's type is: " << currentPtnType << endl;
                                         cout << "Current patient's symptoms is: " << currentPtnSympt << endl;
@@ -426,20 +442,15 @@ int main() {
                                                 updatePtnType = "Suspected";
                                                 break;
                                         }
-                                        updatePatient->updatePatientType(updatePtnType);
+                                        updPtn->updatePatientType(updatePtnType);
 
                                         cout << "Update symptoms: ";
                                         cin >> updatePtnSympt;
-                                        updatePatient->updateSymptoms(updatePtnSympt);
+                                        updPtn->updateSymptoms(updatePtnSympt);
 
                                         cout << "\nData updated!" << endl;
-                                        cout << "Type updated: " << updatePatient->getPatientType() << endl;
-                                        cout << "Symptoms updated: " << updatePatient->getSymptoms() << endl;
-
-                                        for(int i =0; i < ctisexec.getPatientList().size(); i++) {
-                                            cout << "Debug: " << ctisexec.getPatientList()[i].getPatientType() << endl;
-                                            cout << "Debug: " << ctisexec.getPatientList()[i].getSymptoms() << endl;
-                                        }
+                                        cout << "Type updated: " << updPtn->getPatientType() << endl;
+                                        cout << "Symptoms updated: " << updPtn->getSymptoms() << endl;
                                     }
                                 }
                             }
@@ -459,7 +470,7 @@ int main() {
                                 }
                                 if (cvdTestIDRand == ctisexec.getCovidTestList()[i].getTestID()) {
                                     string upRes, upResDate, upStt;
-                                    //TestKit *updTKit = ctisexec.getTestKitByKitID(cvdTestIDRand);
+
                                     CovidTest *updCvdTest = ctisexec.getCovidTestByCTID(cvdTestIDRand);
                                     cout << "\nData Covid Test ID " << updCvdTest->getTestID() << ": " << endl;
                                     cout << "\tTest Date: " << updCvdTest->getTestDate()<< endl;
@@ -472,7 +483,7 @@ int main() {
                                     // update
                                     updCvdTest->updateResult(upRes);
 
-                                    time_t locSysTime = time(NULL); // current system date
+                                    time_t locSysTime = time(NULL);
                                     tm* locSysTimePtr = localtime(&locSysTime);
                                     char curDateToStr[50];
                                     strftime(curDateToStr, 50, "%d %B %Y at %T", locSysTimePtr);
