@@ -31,14 +31,12 @@ Patient::Patient(){
  * aggregation from CovidTest as the argument.
  *
  */
-Patient::Patient(string inUName, string inPwd, string inFName, string inPtnType, string inPtnSymp, CovidTest ctPtn){
+Patient::Patient(string inUName, string inPwd, string inFName, string inPtnType, string inPtnSymp){
     setUsername(inUName);
     setPassword(inPwd);
     setFullname(inFName);
     setPatientType(inPtnType);
     setSymptoms(inPtnSymp);
-    // aggregation
-    setCovidTestPtn(ctPtn);
 }
 
 // destructor
@@ -90,16 +88,17 @@ void Patient::updateSymptoms(string updatePtnSympt) {
     symptoms = updatePtnSympt;
 }
 
-// aggregation
+// setter aggregation
 /**
  * This is setter for Patient's Covid Test.
  * It sets the patient's Covid Test.
  *
  * @param ctPtn as Covid Test assigned to the Patient.
  */
-void Patient::setCovidTestPtn(CovidTest ctPtn) {
-    newCovidTest = ctPtn;
+void Patient::setAgrCovidTest(CovidTest ctPtn){
+    agrCovidTestList.push_back(ctPtn);
 }
+
 // getters
 
 /**
@@ -125,8 +124,25 @@ string Patient::getSymptoms(){
 *
 * @return Covid Test assigned to the Patient.
 */
-CovidTest Patient::getCovidTestPtn() {
-    return newCovidTest;
+vector<CovidTest> Patient::getAgrCovidTest() {
+    return agrCovidTestList;
+}
+
+/**
+ * This method will get the address of vector CovidTest at index-i
+ * based on CovidTest's ID.
+ *
+ * @param cTestID as the CovidTest's ID
+ * @return the address of vector CovidTest if true.
+ * Otherwise, it will return NULL.
+ */
+CovidTest* Patient::getCovidTestByCTID(int cTestID){
+    for (int i = 0; i < agrCovidTestList.size(); i++){
+        if (cTestID == agrCovidTestList[i].getTestID()){
+            return &agrCovidTestList[i];
+        }
+    }
+    return NULL;
 }
 
 /**
@@ -134,6 +150,18 @@ CovidTest Patient::getCovidTestPtn() {
 *
 * @return result of the test.
 */
-string Patient::viewTestHistory() {
-    return "view test history from patient";
+string Patient::viewTestHistory(string usrUname, string usrPwd) {
+    string vth = "";
+
+    if((usrUname == getUsername()) && (usrPwd == getPassword())){
+        for (int i = 0; i < agrCovidTestList.size(); i++){
+            vth = "\nCovid Test ID: " + to_string(getAgrCovidTest()[i].getTestID()) +
+                  "\n\tPatient Name: " + getFullname() +
+                  "\n\tTest Date: " + getAgrCovidTest()[i].getTestDate() +
+                  "\n\tResult: " + getAgrCovidTest()[i].getResult() +
+                  "\n\tResult Date: " +  getAgrCovidTest()[i].getResultDate() +
+                  "\n\tStatus: " +  getAgrCovidTest()[i].getStatus() + "\n";
+        }
+    }
+    return vth;
 }

@@ -67,7 +67,18 @@ void CentreOfficer::setTestCentreOfc(TestCentre tctOfc){
     tct = tctOfc;
 }
 
-// ers
+/**
+ * This is setter for Patient's Covid Test.
+ * It sets the patient's Covid Test.
+ *
+ * @param ctPtn as Covid Test assigned to the Patient.
+ */
+void CentreOfficer::setAgrCovidTest(CovidTest ctPtn){
+    agrCovidTestList.push_back(ctPtn);
+}
+
+
+// getters
 /**
  * This is getter for Centre Officer's position.
  *
@@ -87,11 +98,55 @@ TestCentre CentreOfficer::getTestCentreOfc(){
     return tct;
 }
 
+TestCentre* CentreOfficer::getTestCentrePtr() {
+    return &tct;
+}
+
+/**
+* This is getter for Patient's Covid Test
+*
+* @return Covid Test assigned to the Patient.
+*/
+vector<CovidTest> CentreOfficer::getAgrCovidTest() {
+    return agrCovidTestList;
+}
+
+
+/**
+ * This method will get the address of vector CovidTest at index-i
+ * based on CovidTest's ID.
+ *
+ * @param cTestID as the CovidTest's ID
+ * @return the address of vector CovidTest if true.
+ * Otherwise, it will return NULL.
+ */
+CovidTest* CentreOfficer::getCovidTestByCTID(int cTestID){
+    for (int i = 0; i < agrCovidTestList.size(); i++){
+        if (cTestID == agrCovidTestList[i].getTestID()){
+            return &agrCovidTestList[i];
+        }
+    }
+    return NULL;
+}
+
+
 /**
  * This is method for viewing the test history.
  *
  * @return result of the test.
  */
-string CentreOfficer::viewTestHistory() {
-    return "view test history from centre officer";
+string CentreOfficer::viewTestHistory(string usrUname, string usrPwd) {
+    string vth = "";
+
+    if((usrUname == getUsername()) && (usrPwd == getPassword())){
+        for (int i = 0; i < agrCovidTestList.size(); i++){
+            vth += "\nData No: " + to_string(i+1) + ": " +
+                  "\nCovid Test ID: " + to_string(agrCovidTestList[i].getTestID()) +
+                  "\n\tTest Date: " + agrCovidTestList[i].getTestDate() +
+                  "\n\tResult: " + agrCovidTestList[i].getResult() +
+                  "\n\tResult Date: " +  agrCovidTestList[i].getResultDate() +
+                  "\n\tStatus: " +  agrCovidTestList[i].getStatus() + "\n";
+        }
+    }
+    return vth;
 }

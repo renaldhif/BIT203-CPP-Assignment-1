@@ -118,3 +118,30 @@ int TestKit::getAvailableKit() {
 string TestKit::getTestName() {
     return testName;
 }
+
+// aggregation getter
+/**
+* This is getter for Patient's Covid Test
+*
+* @return Covid Test assigned to the Patient.
+*/
+vector<CovidTest> TestKit::getAgrCovidTest() {
+    return agrCovidTestList;
+}
+
+/**
+ * This method will get the address of vector CovidTest at index-i
+ * based on CovidTest's ID.
+ *
+ * @param cTestID as the CovidTest's ID
+ * @return the address of vector CovidTest if true.
+ * Otherwise, it will return NULL.
+ */
+CovidTest* TestKit::getCovidTestByCTID(int cTestID){
+    for (int i = 0; i < agrCovidTestList.size(); i++){
+        if (cTestID == agrCovidTestList[i].getTestID()){
+            return &agrCovidTestList[i];
+        }
+    }
+    return NULL;
+}

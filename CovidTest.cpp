@@ -101,30 +101,30 @@ void CovidTest::setStatus (string inStatus){
  * This is setter for new Covid Test result.
  * It updates the result of the Covid Test.
  *
- * @param updatePtnType as new covid test result.
+ * @param upRes as new covid test result.
  */
-void CovidTest::updateResult(string updatePtnType) {
-    result = updatePtnType;
+void CovidTest::updateResult(string upRes) {
+    result = upRes;
 }
 
 /**
  * This is setter for new Covid Test Result Date.
  * It updates the result date of the Covid Test.
  *
- * @param updatePtnSympt as new Covid Test Result Date
+ * @param upResDate as new Covid Test Result Date
  */
-void CovidTest::updateResultDate(string updatePtnSympt) {
-    resultDate = updatePtnSympt;
+void CovidTest::updateResultDate(string upResDate) {
+    resultDate = upResDate;
 }
 
 /**
  * This is setter for new Covid Test status.
  * It updates the status of the Covid Test.
  *
- * @param updateStatus as new covid test status.
+ * @param upStatus as new covid test status.
  */
-void CovidTest::updateStatus(string updateStatus){
-    status = updateStatus;
+void CovidTest::updateStatus(string upStatus){
+    status = upStatus;
 }
 
 // getters

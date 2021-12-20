@@ -58,6 +58,10 @@ void TestCentre::setCentreID(int inCentreID){
 void TestCentre::setCentreName(string inCentreName){
     centreName = inCentreName;
 }
+// setter aggregation
+void TestCentre::setAgrTestKit(TestKit tkNew){
+    agrTestKitList.push_back(tkNew);
+}
 
 // getters
 /**
@@ -76,4 +80,31 @@ int TestCentre::getCentreID(){
  */
 string TestCentre::getCentreName(){
     return centreName;
+}
+
+/**
+ * This is getter for TestKit vector.
+ *
+ * @return the testKitList vector
+ */
+vector<TestKit> TestCentre::getAgrTestKit() {
+    return agrTestKitList;
+}
+
+
+/**
+ * This method will get the address of vector TestKit at index-i
+ * based on Kit's ID.
+ *
+ * @param kitID as the Kit's ID
+ * @return the address of vector TestKit if true.
+ * Otherwise, it will return NULL.
+ */
+TestKit* TestCentre::getTestKitByKitID(int kitID){
+    for (int i = 0; i < agrTestKitList.size(); i++){
+        if (kitID == agrTestKitList[i].getKitID()){
+            return &agrTestKitList[i];
+        }
+    }
+    return NULL;
 }

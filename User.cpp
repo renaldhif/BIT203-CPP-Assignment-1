@@ -104,6 +104,6 @@ string User::getFullname(){
  *
  * @return result of the test.
  */
-string User::viewTestHistory(){
+string User::viewTestHistory(string usrUname, string usrPwd){
 
 }

@@ -63,7 +63,7 @@ public:
     string getFullname();
 
     // pure virtual function
-    virtual string viewTestHistory() = 0;
+    virtual string viewTestHistory(string usrUname, string usrPwd) = 0;
 };
 
 /**
@@ -77,6 +77,7 @@ class TestCentre {
 private:
     int centreID;
     string centreName;
+    vector<TestKit> agrTestKitList;
 
 public:
     // constructor
@@ -91,10 +92,15 @@ public:
     // setters
     void setCentreID(int inCentreID);
     void setCentreName(string inCentreName);
+    // setter aggregation
+    void setAgrTestKit(TestKit tkNew);
 
     // getters
     int getCentreID();
     string getCentreName();
+    //getter aggregation
+    vector<TestKit> getAgrTestKit();
+    TestKit* getTestKitByKitID(int kitID);
 };
 
 /**
@@ -158,6 +164,7 @@ class CentreOfficer : public User{
 
 private:
     string ofcPosition;
+    vector<CovidTest> agrCovidTestList;
     TestCentre tct;
 public:
     // constructor
@@ -171,17 +178,21 @@ public:
     // setters
     void setOfcPosition(string inOfcPos);
     void setTestCentreOfc(TestCentre tctOfc);
+    void setAgrCovidTest(CovidTest ctPtn);
 
     // getters
     string getOfcPosition();
     TestCentre getTestCentreOfc();
+    TestCentre* getTestCentrePtr();
+    vector<CovidTest> getAgrCovidTest();
+    CovidTest* getCovidTestByCTID(int cTestID);
 
 
     /**
      * Method for View Test History
      * and overrides the method from the base class (User class)
      */
-    string viewTestHistory() override;
+    string viewTestHistory(string usrUname, string usrPwd) override;
 
 };
 
@@ -198,14 +209,14 @@ class Patient : public User{
 
 private:
     string patientType, symptoms;
-    CovidTest newCovidTest;
+    vector<CovidTest> agrCovidTestList;
 
 public:
     // constructor
     Patient();
 
     // constructor with arguments
-    Patient(string inUName, string inPwd, string inFName, string inPtnType, string inPtnSymp, CovidTest ctPtn);
+    Patient(string inUName, string inPwd, string inFName, string inPtnType, string inPtnSymp);
 
     // destructor
     ~Patient();
@@ -216,19 +227,21 @@ public:
 
     void updatePatientType(string);
     void updateSymptoms(string);
+    // setter aggregation
+    void setAgrCovidTest(CovidTest ctPtn);
 
-    void setCovidTestPtn(CovidTest ctPtn);
     // getters
     string getPatientType();
     string getSymptoms();
-
-    CovidTest getCovidTestPtn();
+    // getter aggregation
+    vector<CovidTest> getAgrCovidTest();
+    CovidTest* getCovidTestByCTID(int cTestID);
 
     /**
      * Method for View Testing History
      * and overrides the method from the base class (User class)
      */
-    string viewTestHistory() override;
+    string viewTestHistory(string usrUname, string usrPwd) override;
 };
 
 /**
@@ -247,9 +260,9 @@ class CTIS{
 private:
     vector<Patient> patientList;
     vector<CentreOfficer> officerList;
-    vector<TestKit> testKitList;
+    //vector<TestKit> testKitList; // ga perlu
     vector<TestCentre> testCentreList;
-    vector<CovidTest> covidTestList;
+    //vector<CovidTest> covidTestList; // ga perlu
 public:
     // Constructor
     CTIS();
@@ -260,22 +273,22 @@ public:
     // setter
     void setPatientList(Patient newPatient);
     void setOfficerList(CentreOfficer newOfficer);
-    void setTestKitList(TestKit newTestKit);
+    //void setTestKitList(TestKit newTestKit);
     void setTestCentreList(TestCentre newTestCentre);
-    void setCovidTestList(CovidTest newCovidTestList);
+    //void setCovidTestList(CovidTest newCovidTestList);
 
     // getter
     vector<Patient> getPatientList();
     vector<CentreOfficer> getOfficerList();
-    vector<TestKit> getTestKitList();
+    //vector<TestKit> getTestKitList();
     vector<TestCentre> getTestCentreList();
-    vector<CovidTest> getCovidTestList();
+    //vector<CovidTest> getCovidTestList();
 
     // getter for object using pointer that points to the index of vector
     CentreOfficer* getOfficerByUsername(string uname);
-    TestKit* getTestKitByKitID(int kitID);
+    // TestKit* getTestKitByKitID(int kitID);
     Patient* getPatientByUsername(string ptnName);
-    CovidTest* getCovidTestByCTID(int cTestID);
+    //CovidTest* getCovidTestByCTID(int cTestID);
 
     // generate random numbers
     // for TestCentre ID, Kit ID, and CovidTest ID
@@ -308,6 +321,7 @@ class TestKit{
 private:
     int kitID, availableKit;
     string testName;
+    vector<CovidTest> agrCovidTestList;
 
 public:
     // constructor
@@ -323,6 +337,8 @@ public:
     void setKitID(int);
     void setAvailableKit(int);
     void setTestName(string);
+    // setter aggregation
+    void setAgrCovidTest(CovidTest cvdTest);
 
     // update stock
     void addStock(int newAdd);
@@ -332,5 +348,8 @@ public:
     int getKitID();
     int getAvailableKit();
     string getTestName();
+    // aggregation getter
+    vector<CovidTest> getAgrCovidTest();
+    CovidTest* getCovidTestByCTID(int cTestID);
 };
 #endif //ASSIGNMENT_1_CTIS_H

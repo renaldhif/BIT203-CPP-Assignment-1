@@ -45,16 +45,6 @@ void CTIS::setOfficerList(CentreOfficer newOfficer) {
 }
 
 /**
- * This is setter for adding TestKit object.
- * It adds the TestKit object to the TestKit vector.
- *
- * @param newTestKit as patient object
- */
-void CTIS::setTestKitList(TestKit newTestKit) {
-    testKitList.push_back(newTestKit);
-}
-
-/**
  * This is setter for adding TestCentre object.
  * It adds the TestCentre object to the testCentreList vector.
  *
@@ -62,16 +52,6 @@ void CTIS::setTestKitList(TestKit newTestKit) {
  */
 void CTIS::setTestCentreList(TestCentre newTestCentre) {
     testCentreList.push_back(newTestCentre);
-}
-
-/**
- * This is setter for adding CovidTest object.
- * It adds the CovidTest object to the covidTestList vector.
- *
- * @param newCovidTestList as CovidTest object
- */
-void CTIS::setCovidTestList(CovidTest newCovidTestList) {
-    covidTestList.push_back(newCovidTestList);
 }
 
 // getter
@@ -95,14 +75,6 @@ vector<CentreOfficer> CTIS::getOfficerList() {
     return officerList;
 }
 
-/**
- * This is getter for TestKit vector.
- *
- * @return the testKitList vector
- */
-vector<TestKit> CTIS::getTestKitList() {
-    return testKitList;
-}
 
 /**
  * This is getter for TestCentre vector.
@@ -111,15 +83,6 @@ vector<TestKit> CTIS::getTestKitList() {
  */
 vector<TestCentre> CTIS::getTestCentreList() {
     return testCentreList;
-}
-
-/**
- * This is getter for Covid Test vector.
- *
- * @return the covidTestList vector
- */
-vector<CovidTest> CTIS::getCovidTestList() {
-    return covidTestList;
 }
 
 /**
@@ -135,23 +98,6 @@ CentreOfficer* CTIS::getOfficerByUsername(string ofcUname)
     for (int i = 0; i < officerList.size(); i++){
         if (ofcUname == officerList[i].getUsername()){
             return &officerList[i];
-        }
-    }
-    return NULL;
-}
-
-/**
- * This method will get the address of vector TestKit at index-i
- * based on Kit's ID.
- *
- * @param kitID as the Kit's ID
- * @return the address of vector TestKit if true.
- * Otherwise, it will return NULL.
- */
-TestKit* CTIS::getTestKitByKitID(int kitID){
-    for (int i = 0; i < testKitList.size(); i++){
-        if (kitID == testKitList[i].getKitID()){
-            return &testKitList[i];
         }
     }
     return NULL;
@@ -174,22 +120,6 @@ Patient* CTIS::getPatientByUsername(string ptnName) {
     return NULL;
 }
 
-/**
- * This method will get the address of vector CovidTest at index-i
- * based on CovidTest's ID.
- *
- * @param cTestID as the CovidTest's ID
- * @return the address of vector CovidTest if true.
- * Otherwise, it will return NULL.
- */
-CovidTest* CTIS::getCovidTestByCTID(int cTestID){
-    for (int i = 0; i < covidTestList.size(); i++){
-        if (cTestID == covidTestList[i].getTestID()){
-            return &covidTestList[i];
-        }
-    }
-    return NULL;
-}
 
 /**
  * This method generates a random unique number from 1 - 10
@@ -412,8 +342,9 @@ bool CTIS::isTestCentreRegistered(string ctName){
  * Otherwise, it will return false.
  */
 bool CTIS::isTestKitRegistered(string tkName) {
-    for (int i = 0; i < testKitList.size(); i++){
-        if (tkName == testKitList[i].getTestName()) {
+    TestCentre tc;
+    for (int i = 0; i < tc.getAgrTestKit().size(); i++){
+        if (tkName == tc.getAgrTestKit()[i].getTestName()) {
             return true;
         }
     }
