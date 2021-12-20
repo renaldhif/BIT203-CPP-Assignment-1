@@ -146,10 +146,12 @@ CovidTest* Patient::getCovidTestByCTID(int cTestID){
 }
 
 /**
-* This is method for viewing the test history.
-*
-* @return result of the test.
-*/
+ * This is method for viewing the patient's test history .
+ *
+ * @return data test,
+ * such as Covid Test ID, Patient name,
+ * Test Date, Result, Result Date, and status.
+ */
 string Patient::viewTestHistory(string usrUname, string usrPwd) {
     string vth = "";
 

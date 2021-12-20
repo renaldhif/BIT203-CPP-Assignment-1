@@ -58,7 +58,14 @@ void TestCentre::setCentreID(int inCentreID){
 void TestCentre::setCentreName(string inCentreName){
     centreName = inCentreName;
 }
+
 // setter aggregation
+/**
+ * This is setter for TestKit vector.
+ * It sets the TestKit vector.
+ *
+ * @param tkNew as TestKit
+ */
 void TestCentre::setAgrTestKit(TestKit tkNew){
     agrTestKitList.push_back(tkNew);
 }
@@ -90,7 +97,6 @@ string TestCentre::getCentreName(){
 vector<TestKit> TestCentre::getAgrTestKit() {
     return agrTestKitList;
 }
-
 
 /**
  * This method will get the address of vector TestKit at index-i

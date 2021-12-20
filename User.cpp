@@ -101,8 +101,9 @@ string User::getFullname(){
 // Method for View Testing History
 /**
  * This is method for viewing the test history.
+ * It will be override by Centre Officer and Patient.
  *
- * @return result of the test.
+ * @return result of the test from Centre Officer and Patient.
  */
 string User::viewTestHistory(string usrUname, string usrPwd){
 

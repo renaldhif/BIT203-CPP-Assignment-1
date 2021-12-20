@@ -77,6 +77,7 @@ class TestCentre {
 private:
     int centreID;
     string centreName;
+    // aggregation
     vector<TestKit> agrTestKitList;
 
 public:
@@ -106,9 +107,7 @@ public:
 /**
  * CovidTest Class
  *
- * It has testID, testDate,
- *          result, resultDate,
- *          and status attributes,
+ * It has testID, testDate, result, resultDate, and status attributes,
  * prototype constructor and constructor with arguments,
  * prototype setter and getter method for each attributes,
  * and prototype additional method for updating attributes
@@ -164,6 +163,7 @@ class CentreOfficer : public User{
 
 private:
     string ofcPosition;
+    // aggregation
     vector<CovidTest> agrCovidTestList;
     TestCentre tct;
 public:
@@ -177,30 +177,30 @@ public:
     ~CentreOfficer();
     // setters
     void setOfcPosition(string inOfcPos);
+    // setter aggregation
     void setTestCentreOfc(TestCentre tctOfc);
     void setAgrCovidTest(CovidTest ctPtn);
 
     // getters
     string getOfcPosition();
+    // getter aggregation
     TestCentre getTestCentreOfc();
     TestCentre* getTestCentrePtr();
     vector<CovidTest> getAgrCovidTest();
     CovidTest* getCovidTestByCTID(int cTestID);
-
 
     /**
      * Method for View Test History
      * and overrides the method from the base class (User class)
      */
     string viewTestHistory(string usrUname, string usrPwd) override;
-
 };
 
 /**
  * Patient Class is a derived class from User class.
  *
- * It has User class attributes,
- *          patientType, symptoms, and CovidTest aggregation attribute,
+ * It has User class attributes, patientType, symptoms,
+ * and CovidTest aggregation attribute,
  * prototype constructor and constructor with arguments,
  * prototype setter and getter method for each attributes,
  * and prototype viewTestHistory.
@@ -209,6 +209,7 @@ class Patient : public User{
 
 private:
     string patientType, symptoms;
+    // aggregation
     vector<CovidTest> agrCovidTestList;
 
 public:
@@ -260,9 +261,8 @@ class CTIS{
 private:
     vector<Patient> patientList;
     vector<CentreOfficer> officerList;
-    //vector<TestKit> testKitList; // ga perlu
     vector<TestCentre> testCentreList;
-    //vector<CovidTest> covidTestList; // ga perlu
+
 public:
     // Constructor
     CTIS();
@@ -273,16 +273,12 @@ public:
     // setter
     void setPatientList(Patient newPatient);
     void setOfficerList(CentreOfficer newOfficer);
-    //void setTestKitList(TestKit newTestKit);
     void setTestCentreList(TestCentre newTestCentre);
-    //void setCovidTestList(CovidTest newCovidTestList);
 
     // getter
     vector<Patient> getPatientList();
     vector<CentreOfficer> getOfficerList();
-    //vector<TestKit> getTestKitList();
     vector<TestCentre> getTestCentreList();
-    //vector<CovidTest> getCovidTestList();
 
     // getter for object using pointer that points to the index of vector
     CentreOfficer* getOfficerByUsername(string uname);
@@ -321,6 +317,7 @@ class TestKit{
 private:
     int kitID, availableKit;
     string testName;
+    // aggregation
     vector<CovidTest> agrCovidTestList;
 
 public:
@@ -348,6 +345,7 @@ public:
     int getKitID();
     int getAvailableKit();
     string getTestName();
+
     // aggregation getter
     vector<CovidTest> getAgrCovidTest();
     CovidTest* getCovidTestByCTID(int cTestID);

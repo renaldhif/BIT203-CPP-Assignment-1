@@ -75,7 +75,6 @@ vector<CentreOfficer> CTIS::getOfficerList() {
     return officerList;
 }
 
-
 /**
  * This is getter for TestCentre vector.
  *

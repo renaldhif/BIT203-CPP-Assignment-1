@@ -68,13 +68,13 @@ void CentreOfficer::setTestCentreOfc(TestCentre tctOfc){
 }
 
 /**
- * This is setter for Patient's Covid Test.
- * It sets the patient's Covid Test.
+ * This is setter for Centre Officer's Covid Test.
+ * It records the Centre Officer's Covid Test to the vector.
  *
- * @param ctPtn as Covid Test assigned to the Patient.
+ * @param ctOfc as Covid Test assigned to the Centre Officer.
  */
-void CentreOfficer::setAgrCovidTest(CovidTest ctPtn){
-    agrCovidTestList.push_back(ctPtn);
+void CentreOfficer::setAgrCovidTest(CovidTest ctOfc){
+    agrCovidTestList.push_back(ctOfc);
 }
 
 
@@ -98,14 +98,19 @@ TestCentre CentreOfficer::getTestCentreOfc(){
     return tct;
 }
 
+/**
+ * This is getter for Centre Officer's Test Centre address.
+ *
+ * @return address of Test Centre assigned to the Centre Officer.
+ */
 TestCentre* CentreOfficer::getTestCentrePtr() {
     return &tct;
 }
 
 /**
-* This is getter for Patient's Covid Test
+* This is getter for Patient's Covid Test vector
 *
-* @return Covid Test assigned to the Patient.
+* @return vector Covid Test assigned to the Patient.
 */
 vector<CovidTest> CentreOfficer::getAgrCovidTest() {
     return agrCovidTestList;
@@ -131,9 +136,11 @@ CovidTest* CentreOfficer::getCovidTestByCTID(int cTestID){
 
 
 /**
- * This is method for viewing the test history.
+ * This is method for viewing the test history recorded
+ * by centre officer
  *
- * @return result of the test.
+ * @return data test,
+ * such as Covid Test ID, Test Date, Result, Result Date, and status.
  */
 string CentreOfficer::viewTestHistory(string usrUname, string usrPwd) {
     string vth = "";
